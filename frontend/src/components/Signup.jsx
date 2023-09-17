@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import BG2 from '../BG2.jpg'
 import { useState } from 'react'
-import './Login.css'
+import './Signup.css';
 
 
 const Signup = () => {
   // Create state variables to store user input
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
+    username: '',
     password: '',
   });
 
@@ -42,17 +44,37 @@ const Signup = () => {
 
         <Link to='/'>
           <Button class='d-flex' style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
-          >  Go To HOME
+          >  GO TO HOME
           </Button>
         </Link>
-        <div className="login-box">
+        <div className="signup-box">
           <form onSubmit={handleSubmit}>
+            <div>
+              <label>Name:</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
             <div>
               <label>Email:</label>
               <input
-                type="text"
+                type="email"
                 name="email"
                 value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Username:</label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
                 onChange={handleInputChange}
                 required
               />
@@ -68,7 +90,7 @@ const Signup = () => {
               />
             </div>
             <div>
-              <button type="submit">Login</button>
+              <button type="submit">SIGNUP</button>
             </div>
           </form>
         </div>

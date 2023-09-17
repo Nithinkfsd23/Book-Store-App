@@ -44,7 +44,7 @@ const Login = () => {
 
         <Link to='/'>
           <Button class='d-flex' style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
-          >  Go To HOME
+          >  GO TO HOME
           </Button>
         </Link>
         <div className="login-box">
@@ -69,10 +69,16 @@ const Login = () => {
                 required
               />
             </div>
-            <div>
+            <div className="d-flex flex-column">
               <button type="submit">Login</button>
+              <div className="forgot-password">
+                <Link to>Forgot Password?</Link>
+              </div>
             </div>
           </form>
+          <div className="new-user-signup">
+            <p>New User? <Link to='/signup'>Signup</Link></p>
+          </div>
         </div>
 
       </div>

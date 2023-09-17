@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import background from '../background.jpeg'
 const Home = () => {
- 
+
 
     return (
 
@@ -35,6 +35,13 @@ const Home = () => {
                                     >   LOGIN
                                     </Button>
                                 </Link>
+
+                                <Link to='/signup'>
+                                    <Button style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
+                                        SIGNUP
+                                    </Button>
+                                </Link>
+
                             </form>
                         </div>
                     </div>
@@ -48,7 +55,7 @@ const Home = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: '100%',
-                        color:'white',
+                        color: 'white',
                     }}
                 >
                     <h1>Welcome to our Book Store</h1>

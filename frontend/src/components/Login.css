@@ -44,6 +44,41 @@ button {
     cursor: pointer;
 }
 
+
+/* Styles for the "Forgot Password?" link */
+.login-box .forgot-password {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .login-box .forgot-password a {
+    color: #008080;
+    text-decoration: none;
+  }
+  
+  .login-box .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Styles for the "New User? Signup" link */
+  .login-box .new-user-signup {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .login-box .new-user-signup p {
+    margin: 0;
+  }
+  
+  .login-box .new-user-signup a {
+    color: #008080;
+    text-decoration: none;
+  }
+  
+  .login-box .new-user-signup a:hover {
+    text-decoration: underline;
+  }
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .login-box {
