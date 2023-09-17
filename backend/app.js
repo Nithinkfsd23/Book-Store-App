@@ -11,9 +11,12 @@ require('./db/mongodb'); // to connect to database
 
 
 //Login routing
-const userRoute = require('./routes/userRoute')
-app.use('/api', userRoute); 
+const loginRoute = require('./routes/loginRoute')
+app.use('/api', loginRoute);
 
+//User module routing
+const userRoute=require('./routes/userRoute');
+app.use('/api',userRoute);
 
 
 const PORT = process.env.PORT;

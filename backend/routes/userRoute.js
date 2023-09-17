@@ -1,43 +1,75 @@
-const express = require('express')
-const userData = require('../model/userData')
+const express = require('express');
 const router = express.Router();
 
-const jwt = require('jsonwebtoken'); //for authorisation
-
-
 router.use(express.json());
-router.use(express.urlencoded({ extended: true }))
+router.use(express.urlencoded({ extended: true }));
+
+const userData = require('../model/userData');
+const jwt = require("jsonwebtoken"); //for authorisation
 
 
-//LOGIN API
-router.post('/login', async (req, res) => {
-    let username = req.body.username;
-    let password = req.body.password;
-    const user = await userData.findOne({ username: username })
 
-    if (!user) {
-        res.json({ message: "User not found !!" })
-    }
+//to get user data for users page
+router.get('/getudata', async (req, res) => {
+    const data = await userData.find();
     try {
-        if (user.password == password) {
-            jwt.sign({ email: username, id: user._id }, "ict", { expiresIn: "1d" },
-                (error, token) => {
-                    if (error) {
-                        res.json({ message: "Token not generated" })
+        jwt.verify(req.params.token, "ict",
+            (error, decoded) => {
+                if (decoded && decoded.email) {
+                    res.json({ "message": "success", data });
+                }
+                else {
+                    res.json({ message: "Unauthorised User" })
+                }
+            })
 
-                    } else {
-                        res.json({ message: "Login Successfull!!", token: token, data: user })
-                    }
-                })
-
-        }
-        else {
-            res.json({ message: "Login Failed!!" })
-        }
-    }
-    catch (error) {
-        console.log(error)
+    } catch (error) {
+        res.json({ message: "Not successful" });
     }
 })
 
-module.exports = router; 
+//to post user data to database
+router.post('/postudata', (req, res) => {
+    try {
+        const item = req.body;
+        const newdata = new userData(item);
+
+        jwt.verify(req.body.token, "ict",
+            (error, decoded) => {
+                if (decoded && decoded.email) {
+                    newdata.save();
+                    res.json({ message: "Posted successfully" });
+
+                } else {
+                    res.json({ message: "Unauthorised User" })
+                }
+            })
+    } catch (error) {
+        res.json({ message: "Post not successful" });
+    }
+})
+
+//to update user data
+router.put('/putudata/:id', async (req, res) => {
+    try {
+        const item = req.body;
+        const index = req.params.id;
+        const updatedData = userData.findByIdAndUpdate(index, item).exec();
+        res.json({ message: "Updated successfully" });
+    } catch (error) {
+        res.json({ message: "Updation not successful" });
+    }
+})
+
+//to delete user data
+router.delete('/deludata/:id', (req, res) => {
+    try {
+        const ind = req.params.id;
+        userData.findByIdAndDelete(ind).exec();
+        res.json({ message: "Deleted successfully" });
+    } catch (error) {
+        res.json({ message: 'Deletion not successful' });
+    }
+})
+
+module.exports = router;
