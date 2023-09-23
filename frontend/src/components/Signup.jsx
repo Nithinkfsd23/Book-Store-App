@@ -28,7 +28,7 @@ const Signup = () => {
   // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform login logic here, e.g., send data to the server
+    //  login logic 
     console.log('Form submitted with data:', formData);
   };
 

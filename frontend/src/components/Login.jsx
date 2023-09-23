@@ -1,5 +1,6 @@
-
+import axios from "axios";
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import BG2 from '../BG2.jpg'
@@ -9,29 +10,61 @@ import './Login.css'
 
 
 const Login = () => {
-  // Create state variables to store user input
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const navigate = useNavigate();
 
+  const [user, setUser] = useState({});
+  const [showAlert, setShowAlert] = useState(false); // State variable for showing the alert
+  const [alertMessage, setAlertMessage] = useState(""); // State variable to hold the alert message
+ 
+ 
   // Handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setUser({
+      ...user,
       [name]: value,
     });
     console.log(value)
+    console.log(user)
   };
 
   // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform login logic here, e.g., send data to the server
-    console.log('Form submitted with data:', formData);
+    axios
+    .post("http://localhost:5000/api/login", user)
+    .then((response) => {
+      if (response.data.message === "Login Successfull!!") {
+        const token = response.data.token;
+        const role = response.data.data.roleInputs;
+        const nameUser = response.data.data.name;
+        sessionStorage.setItem("userToken", token);
+        sessionStorage.setItem("userRole", role);
+        sessionStorage.setItem("userName", nameUser);
+        setShowAlert(true); // Show the success alert
+        setAlertMessage(response.data.message); // Set the success alert message
+        navigateToHome(role); // Call a separate function to navigate to the home page after showing the alert
+      } else {
+        setShowAlert(true); // Show the error alert
+        setAlertMessage(response.data.message); // Set the error alert message
+      }
+    })
+    .catch((err) => console.log(err));
   };
 
+// to direct the user to the respective page after login
+const navigateToHome = (role) => {
+  console.log("login");
+  if (role === 'admin') {
+    navigate("/ahome");
+  }
+  else if (role === 'user') {
+    navigate("/uhome");
+  }
+  };
+
+    
+    
 
 
   return (
@@ -50,11 +83,13 @@ const Login = () => {
         <div className="login-box">
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Email:</label>
+              <label>Username:</label>
               <input
                 type="text"
-                name="email"
-                value={formData.email}
+                
+                name="username"
+                id="username"
+                placeholder="Enter your username"
                 onChange={handleInputChange}
                 required
               />
@@ -64,7 +99,7 @@ const Login = () => {
               <input
                 type="password"
                 name="password"
-                value={formData.password}
+                
                 onChange={handleInputChange}
                 required
               />
