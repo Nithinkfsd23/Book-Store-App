@@ -7,7 +7,7 @@ import './Signup.css';
 
 
 const Signup = () => {
-  // Create state variables to store user input
+  //state variables to store user input
   const [formData, setFormData] = useState({
     name: '',
     email: '',

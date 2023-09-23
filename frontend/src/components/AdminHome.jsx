@@ -14,12 +14,12 @@ const AdminHome = () => {
     }, []);
   
     const fetchBooks = () => {
-      //  fetch the list of books from your backend API
+      //  fetch the list of books from backend API
       // Update the 'books' state with the fetched data
     };
   
     const fetchUsers = () => {
-      //  fetch the list of users from your backend API
+      //  fetch the list of users from backend API
       // Update the 'users' state with the fetched data
     };
   
@@ -76,8 +76,7 @@ const AdminHome = () => {
         </ul>
   
         {/* Add new book form */}
-        {/*  form to add new books with the required fields */}
-  
+   
         {/* Display list of users */}
         <h2>Users</h2>
         <ul>

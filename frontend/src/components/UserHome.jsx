@@ -13,8 +13,7 @@ const UserHome = () => {
 
   const fetchBooks = () => {
     //  fetch the list of books from your backend API
-    // Update the 'books' state with the fetched data
-    // Each book should be an object with properties like 'name', 'genre', 'reviews', etc.
+   
   };
 
   return (
@@ -26,7 +25,7 @@ const UserHome = () => {
           </Button>
         </Link>
 
-      {/* Display list of books as Bootstrap cards */}
+      {/* Display list of books as  cards */}
       <h2>Books</h2>
       <div className="row">
         {books.map((book, index) => (
