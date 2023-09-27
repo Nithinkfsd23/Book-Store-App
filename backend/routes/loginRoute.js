@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
     try {
         const user = await userData.findOne({ username: username });
 
-        if (!user) {
+        if (!user) { 
             res.json({ message: "User not found!" });
             return;
         }

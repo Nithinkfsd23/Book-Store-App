@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import background from '../background.jpeg'
+import BG1 from '../../utils//images/BG1.jpeg'
 const Home = () => {
 
 
@@ -9,7 +9,7 @@ const Home = () => {
 
         <div>
 
-            <div style={{ backgroundImage: `url(${background})`, backgroundSize: "cover", height: "100vh" }}>
+            <div style={{ backgroundImage: `url(${BG1})`, backgroundSize: "cover", height: "100vh" }}>
                 <div className="row">
                     <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
                 </div>
