@@ -15,8 +15,8 @@ const Login = () => {
   const [user, setUser] = useState({});
   const [showAlert, setShowAlert] = useState(false); // State variable for showing the alert
   const [alertMessage, setAlertMessage] = useState(""); // State variable to hold the alert message
- 
- 
+
+
   // Handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -31,40 +31,49 @@ const Login = () => {
   // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
+    let err;
+
     axios
-    .post("http://localhost:5000/api/login", user)
-    .then((response) => {
-      if (response.data.message === "Login Successfull!!") {
-        const token = response.data.token;
-        const role = response.data.data.roleInputs;
-        const nameUser = response.data.data.name;
-        sessionStorage.setItem("userToken", token);
-        sessionStorage.setItem("userRole", role);
-        sessionStorage.setItem("userName", nameUser);
-        setShowAlert(true); // Show the success alert
-        setAlertMessage(response.data.message); // Set the success alert message
-        navigateToHome(role); // Call a separate function to navigate to the home page after showing the alert
-      } else {
+      .post("http://localhost:5000/api/login", user)
+      .then((response) => {
+        if (response.data.message === "Login Successfull!!") {
+          const token = response.data.token;
+          const role = response.data.data.roleInputs;
+          const nameUser = response.data.data.name;
+          sessionStorage.setItem("userToken", token);
+          sessionStorage.setItem("userRole", role);
+          sessionStorage.setItem("userName", nameUser);
+          setShowAlert(true); // Show the success alert
+          setAlertMessage(response.data.message); // Set the success alert message
+          navigateToHome(role); // Call a separate function to navigate to the home page after showing the alert
+        } else {
+          setShowAlert(true); // Show the error alert
+          setAlertMessage(response.data.message); // Set the error alert message
+        }
+      })
+      .catch((error) => {
+        err = error; // Assign the error to the err variable
         setShowAlert(true); // Show the error alert
-        setAlertMessage(response.data.message); // Set the error alert message
-      }
-    })
-    .catch((err) => console.log(err));
+        setAlertMessage("Try again"); //  error message
+        console.log(err);
+      });
+
   };
 
-// to direct the user to the respective page after login
-const navigateToHome = (role) => {
-  console.log("login");
-  if (role === 'admin') {
-    navigate("/ahome");
-  }
-  else if (role === 'user') {
-    navigate("/uhome");
-  }
+
+  // to direct the user to the respective page after login
+  const navigateToHome = (role) => {
+    console.log("login");
+    if (role === 'admin') {
+      navigate("/ahome");
+    }
+    else if (role === 'user') {
+      navigate("/uhome");
+    }
   };
 
-    
-    
+
+
 
 
   return (
@@ -80,13 +89,23 @@ const navigateToHome = (role) => {
           >  GO TO HOME
           </Button>
         </Link>
+
+        {/*  JSX block for displaying the alert message here */}
+        <div className="alert-message">
+          {showAlert && (
+            <div className={`alert ${alertMessage === "Login Successfull!!" ? "success" : "error"}`}>
+              {alertMessage}
+            </div>
+          )}
+        </div>
+
         <div className="login-box">
           <form onSubmit={handleSubmit}>
             <div>
               <label>Username:</label>
               <input
                 type="text"
-                
+
                 name="username"
                 id="username"
                 placeholder="Enter your username"
@@ -99,7 +118,7 @@ const navigateToHome = (role) => {
               <input
                 type="password"
                 name="password"
-                
+                placeholder="Enter your password"
                 onChange={handleInputChange}
                 required
               />

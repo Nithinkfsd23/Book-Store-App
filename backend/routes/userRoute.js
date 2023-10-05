@@ -10,7 +10,7 @@ const userData = require('../model/userData');
 router.get('/getudata', async (req, res) => {
     try {
         const data = await userData.find();
-        res.json({ "message": "success", data });
+        res.json({ "message": "Success", data });
     } catch (error) {
         res.json({ message: "Not successful" });
     }
@@ -22,7 +22,7 @@ router.post('/postudata', async (req, res) => {
         const item = req.body;
         const newdata = new userData(item);
         await newdata.save();
-        res.json({ message: "Posted successfully" });
+        res.json({ message: "User added successfully" });
     } catch (error) {
         res.json({ message: "Post not successful" });
     }

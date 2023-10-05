@@ -17,21 +17,21 @@ router.get('/getbdata', async (req, res) => {
     }
 });
 
-// Post book data
+// Post book data 
 router.post('/postbdata', (req, res) => {
     try {
         const item = req.body;
         const newdata = new bookData(item);
         newdata.save();
-        res.json({ message: "Posted successfully" });
+        res.json({ message: "Book added successfully" });
     } catch (error) {
-        res.json({ message: "Post not successful" });
+        res.json({ message: "Not successful" });
     }
 });
 
 // Update book data
 router.put('/putbdata/:id', async (req, res) => {
-    try {
+    try { 
         const item = req.body;
         const index = req.params.id;
         await bookData.findByIdAndUpdate(index, item).exec();

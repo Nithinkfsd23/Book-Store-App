@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
         }
 
         if (user.password === password) {
-            res.json({ message: "Login successful!", data: user });
+            res.json({ message: "Login Successfull!!", data: user });
         } else {
             res.json({ message: "Login failed!" });
         }

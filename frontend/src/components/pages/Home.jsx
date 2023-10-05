@@ -14,7 +14,7 @@ const Home = () => {
                     <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
                 </div>
 
-
+                 {/* navbar */}
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="#">BOOK STORE APP</a>
