@@ -24,62 +24,7 @@
     /* Sets the text color to white */
 }
 
-.user-data-heading {
-    font-size: 25px;
-    /* Adjust the font size as needed */
-    color: #008080;
-    /* Change the text color to your preferred color */
-    background-color: #f0f0f0;
-    /* Add a background color */
-    padding: 10px 20px;
-    /* Add padding to create space around the heading */
-    border-radius: 10px;
-    /* Round the corners of the heading */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    /* Add a subtle shadow effect */
-    display: inline-block;
-    /* Make it an inline-block element to center it */
-    animation: slideInLeft 0.5s ease-in-out, rotateOnHover 1s infinite ease-in-out;
-    cursor: pointer;
 
-}
-
-/* Slide-in from the left */
-@keyframes slideInLeft {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Rotate on hover */
-@keyframes rotateOnHover {
-    0% {
-        transform: rotate(0);
-    }
-
-    50% {
-        transform: rotate(5deg);
-    }
-
-    100% {
-        transform: rotate(0);
-    }
-}
-
-.user-data-heading:hover {
-    background-color: #008080;
-    /* Change the background color on hover */
-    color: white;
-    /* Change the text color on hover */
-    transition: background-color 0.3s, color 0.3s;
-    /* Add a smooth transition effect */
-}
 .navbar {
     background-color: transparent; /* Make the navbar transparent */
     transition: background-color 0.3s; /* Smooth transition on hover */
@@ -121,22 +66,6 @@
     background-color: #c82333; /* Darker red on hover */
 }
 
-.go-to-books-button {
-    background-color: #008080;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-}
-
-.go-to-books-button:hover {
-    background-color: #005757; /* Darker color on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
-}
 
 /* Fade-in animation */
 .logout-button {
@@ -170,18 +99,23 @@
     }
   }
   
-  /* Apply the animation to the .book-icon-animation class on hover */
-  .book-icon-animation:hover .fa-book {
-    animation: rotateIcon 2s infinite; /* Apply the animation to the .fa-book element */
-  }
-  
-  /* Style the .fa-book element separately */
-  .fa-book {
+  /* Apply the animation to the icon on hover */
+  .book-icon-animation {
     transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
   }
   
-  /* Customize the appearance of the icon */
-  .book-icon-animation .fa-book {
-    font-size: 32px; /* Adjust the size of the icon */
-    color: #000; /* Default color of the icon */
+  .book-icon-animation:hover {
+    animation: rotateIcon 2s infinite; /* Apply the animation */
   }
+  
+
+  /* UserHome.css */
+.user-home-container {
+  background-image: url('../utils/images/userHome.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  height: 100vh; /* Adjust the height as needed */
+  overflow: auto; /* Allow content to be scrolled over the background */
+}

@@ -18,11 +18,11 @@ router.get('/getbdata', async (req, res) => {
 });
 
 // Post book data 
-router.post('/postbdata', (req, res) => {
+router.post('/postbdata', async (req, res) => {
     try {
         const item = req.body;
         const newdata = new bookData(item);
-        newdata.save();
+        await newdata.save();
         res.json({ message: "Book added successfully" });
     } catch (error) {
         res.json({ message: "Not successful" });

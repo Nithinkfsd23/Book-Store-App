@@ -17,6 +17,14 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    libraryId:{
+        type: String,
+        required: true,
+    },
+    contactNumber:{
+        type: String,
+        required: true,
+    },
     roleInputs: {
         type: String,
     },

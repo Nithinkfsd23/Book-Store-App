@@ -2,11 +2,21 @@ const mongoose = require('mongoose');
 
 //  Book schema 
 const bookSchema = new mongoose.Schema({
-    name: {
+    
+    bookName: {
         type: String,
         required: true,
+    }, 
+   
+    author: String,
+
+    // Adding a field for image data
+    imageData: {
+        data: Buffer,
+        contentType: String,
     },
-    image: String,
+
+    review: String,
 
     genre: String,
 

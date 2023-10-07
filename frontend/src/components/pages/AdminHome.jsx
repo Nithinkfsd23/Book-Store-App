@@ -90,7 +90,7 @@ const AdminHome = () => {
               </ul>
               <form class="d-flex" >
 
-                <Link to='/'>
+                <Link to='/uhome'>
                   <Button className="go-to-books-button" style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
                   >  GO TO BOOKS
                   </Button>
@@ -143,6 +143,8 @@ const AdminHome = () => {
                   <th>Username</th>
                   <th>Password</th>
                   <th>Role</th>
+                  <th>Library ID</th>
+                  <th>Contact Number</th>
                   <th>Update</th>
                   <th>Delete</th>
                 </tr>
@@ -155,6 +157,8 @@ const AdminHome = () => {
                     <td>{value.username}</td>
                     <td>{value.password}</td>
                     <td>{value.roleInputs}</td>
+                    <td>{value.libraryId}</td>
+                    <td>{value.contactNumber}</td>
                     <td>
                       <Button className="btn btn-success btn-edit" onClick={() => updateUser(value)}>
                         <i className="fas fa-pencil-alt"></i> {/* Font Awesome edit icon */}

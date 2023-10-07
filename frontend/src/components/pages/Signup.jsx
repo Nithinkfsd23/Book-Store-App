@@ -2,9 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import BG2 from '../../utils/images/BG2.jpg'
-import { useState } from 'react'
-import '../Signup.css';
 
+import '../Signup.css';
+import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
+import axios from 'axios'
+import Swal from 'sweetalert2'
+import { CSSTransition } from 'react-transition-group';
 
 const Signup = () => {
   //state variables to store user input
@@ -13,7 +17,12 @@ const Signup = () => {
     email: '',
     username: '',
     password: '',
+    roleInputs: "user"
   });
+  const [userToken, setUserToken] = useState(sessionStorage.getItem("userToken"))
+  const [userRole, setUserrole] = useState(sessionStorage.getItem("userRole"));
+  const navigate = useNavigate();
+
 
   // Handle input changes
   const handleInputChange = (event) => {
@@ -24,15 +33,36 @@ const Signup = () => {
     });
     console.log(value)
   };
+  let data = {
 
+    token: userToken,
+    role: userRole,
+    name: formData.name,
+    email: formData.email,
+    username: formData.username,
+    password: formData.password,
+    roleInputs: formData.roleInputs
+  }
   // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     //  login logic 
     console.log('Form submitted with data:', formData);
+
+    axios.post(`http://localhost:5000/api/postudata`, data)
+      .then((response) => {
+        if (response.data.message === "User added successfully") {
+          Swal.fire('', response.data.message, 'success');
+          navigate('/login');
+        }
+        else {
+          Swal.fire('Sorry', response.data.message, '');
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   };
-
-
 
   return (
     <div>
