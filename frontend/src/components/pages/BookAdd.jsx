@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import '../AdminAdd.css';
 import addBooks from '../../utils/images/addBooks.jpg';
 import { CSSTransition } from 'react-transition-group';
+import { Button } from 'semantic-ui-react';
 
 const BookAdd = (props) => {
   const [inputs, setInputs] = useState(props.data);
@@ -157,6 +158,26 @@ const BookAdd = (props) => {
     'Musical',
     'Mystery',
   ];
+
+
+
+// Check if the user is an admin before rendering the form
+const isAdmin = userRole === 'admin';
+
+if (!isAdmin) {
+  return (
+    <div>
+      <h2>Access Denied</h2>
+      <p>You do not have permission to access this page.</p>
+      <Link to="/login">
+        <Button primary>Login</Button>
+      </Link>
+    </div>
+  );
+}
+
+
+
 
   return (
     <div style={{ backgroundImage: `url(${addBooks})`, 

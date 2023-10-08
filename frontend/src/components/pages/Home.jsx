@@ -173,7 +173,7 @@ const Home = () => {
                     <strong>Status:</strong> {clickedCard.availabilityStatus}
                   </p>
                   <p>
-                    <strong>isbnNumber:</strong> {clickedCard.isbnNumber}
+                    <strong>ISBN Number:</strong> {clickedCard.isbnNumber}
                   </p>
                   <p>
                     <strong>Publication Year:</strong> {clickedCard.publicationYear}
