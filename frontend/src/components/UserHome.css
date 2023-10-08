@@ -142,3 +142,9 @@
   text-decoration: none; /* Remove underline from links */
   margin-right: 10px; /* Add margin between links and buttons */
 }
+
+.expanded-card {
+  height: auto;
+  overflow: visible;
+  transition: height 0.3s ease; /* Add smooth transition animation */
+}

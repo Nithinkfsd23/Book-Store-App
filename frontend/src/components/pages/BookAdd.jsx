@@ -192,6 +192,7 @@ const BookAdd = (props) => {
                         value={inputs.bookName}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       />
                       {displayNameWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Name is required</p>
@@ -217,6 +218,7 @@ const BookAdd = (props) => {
                         value={inputs.author}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       />
                       {displayAuthorWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Author is required</p>
@@ -241,6 +243,7 @@ const BookAdd = (props) => {
                         value={inputs.genre}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       >
                         <option value="" disabled>
                           Select a genre
@@ -275,6 +278,7 @@ const BookAdd = (props) => {
                         value={inputs.review}
                         onChange={inputHandler}
                         required
+                        
                       />
                     </div>
                   </div>
@@ -296,6 +300,7 @@ const BookAdd = (props) => {
                         value={inputs.languages}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       >
                         <option value="" disabled>
                           Select a language
@@ -330,6 +335,7 @@ const BookAdd = (props) => {
                         value={inputs.rentalPeriod}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       />
                       {displayRentalPeriodWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Rental Period is required</p>
@@ -355,6 +361,7 @@ const BookAdd = (props) => {
                         value={inputs.description}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       />
                       {displayDescriptionWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Description is required</p>
@@ -379,6 +386,7 @@ const BookAdd = (props) => {
                         value={inputs.availabilityStatus}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       >
                         <option value="" disabled>
                           Select availability status
@@ -410,6 +418,7 @@ const BookAdd = (props) => {
                         value={inputs.isbnNumber}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       />
                       {displayIsbnNumberWarn && (
                         <p className="fw-light fst-italic text-start text-danger">ISBN Number is required</p>
@@ -433,6 +442,7 @@ const BookAdd = (props) => {
                         value={inputs.publicationYear}
                         onChange={inputHandler}
                         required
+                        disabled={userRole !== 'admin'}
                       >
                         <option value="" disabled>
                           Select publication year

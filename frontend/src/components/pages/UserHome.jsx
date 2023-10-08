@@ -19,7 +19,7 @@ const UserHome = () => {
   const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken'));
   const [userRole, setUserrole] = useState(sessionStorage.getItem('userRole'));
   const [loading, setLoading] = useState(true);
-
+  const [clickedCard, setClickedCard] = useState(null);
   // Fetch Users data from the database
   const fetchDatafromAPI = () => {
     return axios
@@ -81,7 +81,10 @@ const UserHome = () => {
       .catch((error) => console.log(error));
   };
 
-
+ // Function to show full card details when a card is clicked
+ const showFullCard = (card) => {
+  setClickedCard(card);
+};
 
   // To display users data
   let finalJSX =
@@ -125,30 +128,80 @@ const UserHome = () => {
         <div className="container text-center mt-4">
           <h2 className="user-data-heading">BOOKS </h2>
         </div>
+        </div>
 
+
+        {clickedCard ? (
+      <div className="container">
+        {/* Full card details */}
+        <div className="card" >
+          
+          <h1 className="card-title">{clickedCard.bookName}</h1>
+          <div className="card-details">
+              <p>
+                <strong>Author:</strong> {clickedCard.author}
+              </p>
+              <p>
+                <strong>Genre:</strong> {clickedCard.genre}
+              </p>
+              <p>
+                <strong>Review:</strong> {clickedCard.review}
+              </p>
+              <p>
+                <strong>Languages:</strong> {clickedCard.languages}
+              </p>
+              <p>
+                <strong>Rental Period:</strong> {clickedCard.rentalPeriod}
+              </p>
+              <p>
+                <strong>Status:</strong> {clickedCard.availabilityStatus}
+              </p>
+              <p>
+                <strong>ISBN Number:</strong> {clickedCard.isbnNumber}
+              </p>
+              <p>
+                <strong>Publication Year:</strong> {clickedCard.publicationYear}
+              </p>
+              <p>
+                <strong>Description:</strong> {clickedCard.description}
+              </p>
+            </div>
+          {/* button to go back to the card view */}
+          <button onClick={() => setClickedCard(null)}>Go Back</button>
+        </div>
       </div>
-      <div className="container w-75 mt-4 pt-4">
+    ) : (
 
-        <Link to="/badd">
-          <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
-            <FontAwesomeIcon 
-            icon={faBook}
-             className="book-icon-animation"
-              style={{
-              fontSize: '48px', // Increase the size of the icon
-              animation: 'rotateIcon 2s infinite', // Add animation
-            }} /> {/* Use the book icon */}
-          </Button>
-        </Link>
+      
+      <div className="container w-75 mt-4 pt-4">
+        {userRole === 'admin' && (
+          <>
+            <Link to="/badd">
+              <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
+                <FontAwesomeIcon
+                  icon={faBook}
+                  className="book-icon-animation"
+                  style={{
+                    fontSize: '48px', // Increase the size of the icon
+                    animation: 'rotateIcon 2s infinite', // Add animation
+                  }} /> {/* Use the book icon */}
+              </Button>
+            </Link>
+          </>
+        )}
 
         <div className="row">
           {loading ? (
             <p>Loading data...</p>
           ) : data && data.length > 0 ? (
             data.map((value) => (
-              <div key={value._id} className="col-md-4 mb-4">
-                <div className="card">
+              <div
+                key={value._id}
+                className={`col-md-4 mb-4 ${clickedCard === value ? 'expanded-card' : ''}`}
+                onClick={() => showFullCard(value)}
+              >
 
+                <div className="card">
 
                   {value.imageData && (
                     <img
@@ -179,21 +232,31 @@ const UserHome = () => {
                   </div>
                   <div className="card-footer">
 
-{/*image */}
+                    {/*image */}
+                    {userToken && (
+                      <>
+                        <Button variant="primary" className="custom-button" onClick={() => editReview(value)}>
+                          Review
+                        </Button>
+                        {/* Conditionally render the buttons based on the user's role */}
+                        {userRole === 'admin' && (
+                          <>
+                            <Button variant="success" className="custom-button" onClick={() => updateBook(value)}>
+                              Edit{/* Edit button */}
+                            </Button>{' '}
+                            <Button variant="danger" className="custom-button" onClick={() => deleteBook(value._id)}>
+                              Delete
 
-                    <Button variant="primary" className="custom-button" onClick={() => editReview(value)}>
-                      Review
-                    </Button>
-                    <Button variant="success" className="custom-button" onClick={() => updateBook(value)}>
-                      Edit{/* Edit button */}
-                    </Button>{' '}
-                    <Button variant="danger" className="custom-button" onClick={() => deleteBook(value._id)}>
-                      Delete
-                    </Button>{/* Delete button */}
-                    <Link to="/rentbook/:id" className="custom-link" > {/* Add Link component here */}
-                      <Button variant="primary" className="custom-button">Rent</Button>
-                    </Link>{/* Rent button */}
+                            </Button>{/* Delete button */}
+                          </>
+                        )}
+                        <Link to="/rentbook/:id" className="custom-link" > {/* Add Link component here */}
+                          <Button variant="primary" className="custom-button">Rent</Button>
+                        </Link>{/* Rent button */}
+                      </>
+                    )}
                   </div>
+
                 </div>
               </div>
             ))
@@ -201,13 +264,19 @@ const UserHome = () => {
             <p>No data available...</p>
           )}
         </div>
+        </div>
+        )}
       </div>
-    </div>
+    
+   
+   
+    
   if (updation) finalJSX = <BookAdd method="put" data={singleval} reloadData={reloadData} />;
 
   return (
     finalJSX
   )
+
 };
 
 export default UserHome

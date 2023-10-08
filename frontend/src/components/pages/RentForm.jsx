@@ -70,17 +70,14 @@ const RentForm = () => {
       });
   };
 
-  const goBack = () => {
-    window.history.back(); // Use window.history.back() to go back to the previous page
-  };
 
   return (
     <div>
       <h2>Rent Book: {bookInfo.bookName}</h2>
-      
+
       {rentedSuccessfully && <p>Book rented successfully!</p>}
 
-        
+
       <form>
         <div>
           <label>Book Name:</label>
@@ -128,7 +125,10 @@ const RentForm = () => {
           />
         </div>
 
-        <button onClick={goBack}>Go Back</button> {/* Use the goBack function to navigate back */}
+        {/* Add a Link to User Home */}
+        <Link to="/uhome">
+          <button type="button">Go Back</button>
+        </Link>
         <button type="button" onClick={handleRent}>Rent Book</button>
       </form>
     </div>
