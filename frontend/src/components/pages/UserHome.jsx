@@ -1,16 +1,13 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import '../UserHome.css'
+import '../UserHome.css';
 import 'font-awesome/css/font-awesome.min.css';
 import BookAdd from './BookAdd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
-
-
 
 const UserHome = () => {
   const [data, setData] = useState([]);
@@ -20,6 +17,14 @@ const UserHome = () => {
   const [userRole, setUserrole] = useState(sessionStorage.getItem('userRole'));
   const [loading, setLoading] = useState(true);
   const [clickedCard, setClickedCard] = useState(null);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    sessionStorage.clear(); // Clear sessionStorage
+    console.clear(); // Clear console output
+    navigate("/")
+  }
+
   // Fetch Users data from the database
   const fetchDatafromAPI = () => {
     return axios
@@ -81,16 +86,18 @@ const UserHome = () => {
       .catch((error) => console.log(error));
   };
 
- // Function to show full card details when a card is clicked
- const showFullCard = (card) => {
-  setClickedCard(card);
-};
+  // Function to show full card details when a card is clicked
+  const showFullCard = (card) => {
+    setClickedCard(card);
+  };
 
   // To display users data
-  let finalJSX =
+  let finalJSX = (
+
     <div className="user-home-container">
       <div className="row">
-        <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
+        <div className="col col-12 col-sm-12 col-md-12 col-lg-12">
+
 
         {/* navbar */}
         <nav class="navbar navbar-expand-lg transparent-bg white-text">
@@ -107,17 +114,17 @@ const UserHome = () => {
               </ul>
               <form class="d-flex" >
 
-                <Link to='/'>
+                <Link to='/ahome'>
                   <Button className="go-to-books-button" style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
-                  >  GO TO HOME
+                  >  ADMIN DASHBOARD
                   </Button>
                 </Link>
 
-                <Link to='/'>
-                  <Button className="logout-button" style={{ backgroundColor: '#ff4500', color: 'white', marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
-                    LOGOUT
-                  </Button>
-                </Link>
+
+                <Button className="logout-button" onClick={logout} style={{ backgroundColor: '#ff4500', color: 'white', marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
+                  LOGOUT
+                </Button>
+
 
               </form>
             </div>
@@ -125,19 +132,22 @@ const UserHome = () => {
         </nav>
         {/* navbar end */}
 
+{/* Conditional check for user login */}
+
         <div className="container text-center mt-4">
           <h2 className="user-data-heading">BOOKS </h2>
         </div>
-        </div>
+      
+      
 
 
-        {clickedCard ? (
-      <div className="container">
-        {/* Full card details */}
-        <div className="card" >
-          
-          <h1 className="card-title">{clickedCard.bookName}</h1>
-          <div className="card-details">
+      {clickedCard ? (
+        <div className="container ">
+          {/* Full card details */}
+          <div className="card expanded-card">
+            {/* Render all the card details here */}
+            <h1 className="expanded-card-title  ">{clickedCard.bookName}</h1>
+            <div className="expanded-card-details">
               <p>
                 <strong>Author:</strong> {clickedCard.author}
               </p>
@@ -166,117 +176,124 @@ const UserHome = () => {
                 <strong>Description:</strong> {clickedCard.description}
               </p>
             </div>
-          {/* button to go back to the card view */}
-          <button onClick={() => setClickedCard(null)}>Go Back</button>
+            {/* Include a button or link to go back to the card view */}
+            <div><button onClick={() => setClickedCard(null)} className="go-back-button">
+              Go Back
+            </button></div>
+          </div>
         </div>
-      </div>
-    ) : (
-
-      
-      <div className="container w-75 mt-4 pt-4">
-        {userRole === 'admin' && (
-          <>
-            <Link to="/badd">
-              <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
-                <FontAwesomeIcon
-                  icon={faBook}
-                  className="book-icon-animation"
-                  style={{
-                    fontSize: '48px', // Increase the size of the icon
-                    animation: 'rotateIcon 2s infinite', // Add animation
-                  }} /> {/* Use the book icon */}
-              </Button>
-            </Link>
-          </>
-        )}
-
-        <div className="row">
-          {loading ? (
-            <p>Loading data...</p>
-          ) : data && data.length > 0 ? (
-            data.map((value) => (
-              <div
-                key={value._id}
-                className={`col-md-4 mb-4 ${clickedCard === value ? 'expanded-card' : ''}`}
-                onClick={() => showFullCard(value)}
-              >
-
-                <div className="card">
-
-                  {value.imageData && (
-                    <img
-                      src={`data:${value.imageData.contentType};base64,${Buffer.from(
-                        value.imageData.data
-                      ).toString('base64')}`}
-                      className="card-img-top"
-                      alt={value.bookName}
-                    />
-                  )}
-
-                  <div className="card-body">
-                    <h5 className="card-title">{value.bookName}</h5>
-                    <p className="card-text">
-                      <strong>Author:</strong> {value.author} {/* Display Author */}
-                      <br /><strong>Genre:</strong> {value.genre}
-                      <br />
-                      <strong>Reviews:</strong> {value.review}
-
-                      <br />
-                      <strong>Status:</strong>{' '}
-                      {value.availabilityStatus === 'Available' ? (
-                        <span style={{ color: 'green' }}>{value.availabilityStatus}</span>
-                      ) : (
-                        <span style={{ color: 'red' }}>{value.availabilityStatus}</span>
-                      )}
-                    </p>
-                  </div>
-                  <div className="card-footer">
-
-                    {/*image */}
-                    {userToken && (
-                      <>
-                        <Button variant="primary" className="custom-button" onClick={() => editReview(value)}>
-                          Review
-                        </Button>
-                        {/* Conditionally render the buttons based on the user's role */}
-                        {userRole === 'admin' && (
-                          <>
-                            <Button variant="success" className="custom-button" onClick={() => updateBook(value)}>
-                              Edit{/* Edit button */}
-                            </Button>{' '}
-                            <Button variant="danger" className="custom-button" onClick={() => deleteBook(value._id)}>
-                              Delete
-
-                            </Button>{/* Delete button */}
-                          </>
-                        )}
-                        <Link to="/rentbook/:id" className="custom-link" > {/* Add Link component here */}
-                          <Button variant="primary" className="custom-button">Rent</Button>
-                        </Link>{/* Rent button */}
-                      </>
-                    )}
-                  </div>
-
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No data available...</p>
+      ) : (
+        <div className="container w-75 mt-4 pt-4">
+          {userRole === 'admin' && (
+            <>
+              <Link to="/badd">
+                <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
+                  <FontAwesomeIcon
+                    icon={faBook}
+                    className="book-icon-animation"
+                    style={{
+                      fontSize: '48px', // Increase the size of the icon
+                      animation: 'rotateIcon 2s infinite', // Add animation
+                    }}
+                  />{' '}
+                  {/* Use the book icon */}
+                </Button>
+              </Link>
+            </>
           )}
+
+          <div className="row">
+            {loading ? (
+              <p>Loading data...</p>
+            ) : data && data.length > 0 ? (
+              data.map((value) => (
+                <div
+                  key={value._id}
+                  className={`col-md-4 mb-4 card-container ${clickedCard === value ? 'expanded-card' : ''}`}
+                  onClick={() => showFullCard(value)}
+                >
+                  <div className="card" style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}>
+                    {value.imageData && (
+                      <img
+                        src={`data:${value.imageData.contentType};base64,${Buffer.from(
+                          value.imageData.data
+                        ).toString('base64')}`}
+                        className="card-img-top"
+                        alt={value.bookName}
+                      />
+                    )}
+
+                    <div className="card-body animated" style={{ height: '250px' }}>
+                      <h5 className="card-title">{value.bookName}</h5>
+                      <p className="card-text">
+                        <strong>Author:</strong> {value.author} {/* Display Author */}
+                        <br />
+                        <strong>Genre:</strong> {value.genre}
+                        <br />
+                        <strong>Reviews:</strong> {value.review}
+                        <br />
+
+                        <strong>Status:</strong>{' '}
+                        {value.availabilityStatus === 'Available' ? (
+                          <span style={{ color: 'green' }}>{value.availabilityStatus}</span>
+                        ) : (
+                          <span style={{ color: 'red' }}>{value.availabilityStatus}</span>
+                        )}
+                        <br />
+                        <strong>Description:</strong> {value.description}
+                        <br />
+                      </p>
+                    </div>
+                    <div className="card-footer">
+                      {/*image */}
+                      {userToken && (
+                        <>
+                          <Button variant="primary" className="custom-button" onClick={() => editReview(value)}>
+                            Review
+                          </Button>
+                          {/* Conditionally render the buttons based on the user's role */}
+                          {userRole === 'admin' && (
+                            <>
+                              <Button variant="success" className="custom-button" onClick={() => updateBook(value)}>
+                                Edit{/* Edit button */}
+                              </Button>{' '}
+                              <Button variant="danger" className="custom-button" onClick={() => deleteBook(value._id)}>
+                                Delete
+                              </Button>{/* Delete button */}
+                            </>
+                          )}
+                          <Link to="/rentbook/:id" className="custom-link">
+                            {/* Add Link component here */}
+                            <Button variant="primary" className="custom-button">
+                              Rent
+                            </Button>
+                          </Link>{/* Rent button */}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No data available...</p>
+            )}
+          </div>
         </div>
-        </div>
-        )}
+      )}
+
+
+     
       </div>
-    
-   
-   
-    
+      </div>     
+    </div>
+  );
+
   if (updation) finalJSX = <BookAdd method="put" data={singleval} reloadData={reloadData} />;
+
 
   return (
     finalJSX
   )
-
 };
 
-export default UserHome
+export default UserHome;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AdminAdd from './AdminAdd';
 import adminNew from '../../utils/images/adminNew.jpg'
 import Swal from 'sweetalert2';
@@ -16,6 +16,14 @@ const AdminHome = () => {
   const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken'));
   const [userRole, setUserrole] = useState(sessionStorage.getItem('userRole'));
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    sessionStorage.clear(); // Clear sessionStorage
+    console.clear(); // Clear console output
+    navigate("/")
+  }
+
 
   // Fetch Users data from the database
   const fetchDatafromAPI = () => {
@@ -71,7 +79,13 @@ const AdminHome = () => {
 
   // To display users data
   let finalJSX =
-    <div style={{ backgroundImage: `url(${adminNew})`, backgroundSize: "cover", height: "150vh" }}>
+    <div style={{ backgroundImage: `url(${adminNew})`, 
+    backgroundSize: "cover",
+     height: "100vh",
+     backgroundRepeat:'no-repeat',
+     backgroundAttachment:'fixed',
+     backgroundPosition:'center',
+     overflow:'auto' }}>
       <div className="row">
         <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
 
@@ -97,11 +111,11 @@ const AdminHome = () => {
                     </Button>
                   </Link>
                 )}
-                <Link to='/'>
-                  <Button className="logout-button" style={{ backgroundColor: '#ff4500', color: 'white', marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
-                    LOGOUT
-                  </Button>
-                </Link>
+
+                <Button className="logout-button" onClick={logout} style={{ backgroundColor: '#ff4500', color: 'white', marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
+                  LOGOUT
+                </Button>
+
 
               </form>
             </div>
@@ -117,13 +131,13 @@ const AdminHome = () => {
       <div className="container w-75 mt-4 pt-4">
 
 
-{userRole === 'admin' && (
-        <Link to="/aadd">
-          <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
-            <ion-icon name="person-add-outline" size="large"></ion-icon>
-          </Button>
-        </Link>
-)}
+        {userRole === 'admin' && (
+          <Link to="/aadd">
+            <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
+              <ion-icon name="person-add-outline" size="large"></ion-icon>
+            </Button>
+          </Link>
+        )}
 
 
 

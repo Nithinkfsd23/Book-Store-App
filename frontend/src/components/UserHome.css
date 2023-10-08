@@ -143,8 +143,131 @@
   margin-right: 10px; /* Add margin between links and buttons */
 }
 
+
+
+/* Style for the status label */
+.status-label {
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+}
+
+.available {
+  background-color: green;
+}
+
+.not-available {
+  background-color: red;
+}
+
+/* CSS animation for card-body */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(75px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY();
+  }
+}
+
+/* Apply the custom font to card-body, card-title, and card-text */
+.card-body {
+  font-family: 'Roboto', sans-serif; /* Use the custom font as a fallback */
+  text-align: left;
+  padding: 20px;
+  transition: transform 0.3s;
+}
+
+.card-title {
+  font-family: 'Roboto', sans-serif; /* Use the custom font as a fallback */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-family: 'Roboto', sans-serif; /* Use the custom font as a fallback */
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Add hover effect and display "Click to View Book Data" message */
+.card-container:hover .card-body {
+  transform: scale(1.05); /* Scale the card slightly on hover */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+/* Style the "Click to View Book Data" message */
+.card-container::before {
+  content: 'Click to View Book Data';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  opacity: 0; /* Hide the message by default */
+  transition: opacity 0.3s;
+}
+
+/* Display the "Click to View Book Data" message on hover */
+.card-container:hover::before {
+  opacity: 1;
+}
+
 .expanded-card {
-  height: auto;
-  overflow: visible;
-  transition: height 0.3s ease; /* Add smooth transition animation */
+  background-color: #fff;
+  border: 10px solid #ccc; /* Reduced border size */
+  padding: 10px; /* Reduced padding */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Reduced box shadow */
+  max-width: 500px; /* Adjust the maximum width as needed */
+  margin: 0 auto; /* Center the card horizontally */
+}
+/* Style the title */
+.expanded-card-title {
+  font-size: 24px; /* Adjust the font size as needed */
+  font-weight: bold; /* Apply bold font weight */
+  margin-bottom: 10px; /* Add some spacing between the title and details */
+  color: #333; /* Set the text color */
+}
+
+/* Style the details */
+.expanded-card-details {
+  font-size: 16px; /* Adjust the font size as needed */
+  color: #666; /* Set the text color */
+  line-height: 1.5; /* Set the line height for better readability */
+}
+
+/* Style the go-back button */
+.go-back-button {
+  background-color: #008080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px; /* Add spacing above the button */
+}
+
+/* Adjust button size on smaller screens */
+@media (max-width: 768px) {
+  .go-back-button {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+}
+.signup-button:hover{
+  transform: scale(1.1);
+}
+.login-button:hover{
+  transform: scale(1.1);
 }

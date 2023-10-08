@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Segment } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import '../AdminAdd.css';
@@ -161,7 +159,13 @@ const BookAdd = (props) => {
   ];
 
   return (
-    <div style={{ backgroundImage: `url(${addBooks})`, backgroundSize: 'cover', height: '100vh' }}>
+    <div style={{ backgroundImage: `url(${addBooks})`, 
+    backgroundSize: 'cover', 
+    height: '100vh',
+    backgroundRepeat:'no-repeat',
+    backgroundAttachment:'fixed',
+    backgroundPosition:'center',
+    overflow:'auto' }}>
       <div className="row">
         <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
         {/* Users Form */}
@@ -265,7 +269,7 @@ const BookAdd = (props) => {
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
                       <label htmlFor="review" className="form-label">
-                        review:
+                        Review:
                       </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">

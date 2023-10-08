@@ -30,6 +30,7 @@ function App() {
             imageData: "",
             review:"",
             genre: "",
+            languages:"English",
             rentalPeriod: "",
             description: "",
             availabilityStatus: "Available",

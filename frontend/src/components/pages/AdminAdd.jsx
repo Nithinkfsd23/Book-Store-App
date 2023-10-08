@@ -60,7 +60,7 @@ const AdminAdd = (props) => {
     let isValid = true;
 
     // Name validation: Check if it contains only letters
-    if (!/^[a-zA-Z]+$/.test(inputs.name)) {
+    if (!/^[a-zA-Z\s]+$/.test(inputs.name)) {
       setDisplayNamewarn(true);
       isValid = false;
     } else {
