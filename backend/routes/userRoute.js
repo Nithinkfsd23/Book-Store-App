@@ -5,30 +5,51 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 const userData = require('../model/userData');
+const jwt = require("jsonwebtoken");
+const adm= require("../authz/adm")
 
 // Get user data for users page (no JWT authentication)
-router.get('/getudata', async (req, res) => {
+router.get('/getudata/:token/:role',adm, async (req, res) => {
+    const data = await userData.find();
     try {
-        const data = await userData.find();
-        res.json({ "message": "Success", data });
+
+        jwt.verify(req.params.token, "ict",
+            (error, decoded) => {
+                if (decoded && decoded.email) {
+                    res.json({ "message": "Success", data });
+                }
+                else {
+                    res.json({ message: "Unauthorised User" })
+                }
+            })
+
     } catch (error) {
         res.json({ message: "Not successful" });
     }
 });
 
-// Post user data to the database (no JWT authentication)
-router.post('/postudata', async (req, res) => {
+// Post user data to the database 
+router.post('/postudata',  (req, res) => {
     try {
+
         const item = req.body;
         const newdata = new userData(item);
-        await newdata.save();
-        res.json({ message: "User added successfully" });
+
+        jwt.verify(req.body.token, "ict",
+            (error, decoded) => {
+                if (decoded && decoded.email) {
+                    newdata.save();
+                    res.json({ message: "User added successfully" });
+                } else {
+                    res.json({ message: "Unauthorised User" })
+                }
+            })
     } catch (error) {
         res.json({ message: "Post not successful" });
     }
 });
 
-// Update user data (no JWT authentication)
+// Update user data 
 router.put('/putudata/:id', async (req, res) => {
     try {
         const item = req.body;
@@ -40,7 +61,7 @@ router.put('/putudata/:id', async (req, res) => {
     }
 });
 
-// Delete user data (no JWT authentication)
+// Delete user data 
 router.delete('/deludata/:id', async (req, res) => {
     try {
         const ind = req.params.id;

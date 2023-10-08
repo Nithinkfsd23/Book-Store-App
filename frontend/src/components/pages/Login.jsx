@@ -30,6 +30,9 @@ const Login = () => {
 
   // Handle form submission
   const handleSubmit = (event) => {
+
+    console.log("Clicked", user);
+
     event.preventDefault();
     let err;
  

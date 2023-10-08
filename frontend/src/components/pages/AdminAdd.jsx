@@ -120,6 +120,7 @@ const AdminAdd = (props) => {
         libraryId: inputs.libraryId,
         contactNumber: inputs.contactNumber,
       }
+      console.log(data)
       // post function
       if (props.method === "post") {
         axios.post(`http://localhost:5000/api/postudata`, data)

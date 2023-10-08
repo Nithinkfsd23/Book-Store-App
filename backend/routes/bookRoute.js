@@ -4,11 +4,13 @@ const bookData = require('../model/bookData'); // Import your Book model
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-
+const jwt = require('jsonwebtoken');
+const adm= require("../authz/adm")
 // Get all book data
 router.get('/getbdata', async (req, res) => {
     try {
         const data = await bookData.find();
+       
         res.json({ message: "Success", data });
     } catch (error) {
         res.json({ message: "Failed to retrieve book data" });
@@ -16,16 +18,24 @@ router.get('/getbdata', async (req, res) => {
 });
 
 // Post book data 
-router.post('/postbdata', async (req, res) => {
-    try {
+router.post('/postbdata', (req, res) => {
+    try { 
         const item = req.body;
         const newdata = new bookData(item);
-        await newdata.save();
+        jwt.verify(req.body.token, "ict",
+            (error, decoded) => {
+                if (decoded && decoded.email) {
+                    newdata.save();
         res.json({ message: "Book added successfully" });
-    } catch (error) {
-        res.json({ message: "Not successful" });
+    } else {
+        res.json({ message: "Unauthorised User" })
     }
-});
+})
+
+} catch (error) {
+res.json({ message: "Post not successful" });
+}
+})
 
 // Update book data (without image)
 router.put('/putbdata/:id', async (req, res) => {

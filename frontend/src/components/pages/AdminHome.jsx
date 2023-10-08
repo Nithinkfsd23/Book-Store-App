@@ -20,7 +20,7 @@ const AdminHome = () => {
   // Fetch Users data from the database
   const fetchDatafromAPI = () => {
     return axios
-      .get(`http://localhost:5000/api/getudata`)
+      .get(`http://localhost:5000/api/getudata/${userToken}/${userRole}`)
       .then((response) => {
         if (response.data.message === 'Success') {
           setData(response.data.data);
@@ -90,12 +90,13 @@ const AdminHome = () => {
               </ul>
               <form class="d-flex" >
 
-                <Link to='/uhome'>
-                  <Button className="go-to-books-button" style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
-                  >  GO TO BOOKS
-                  </Button>
-                </Link>
-
+                {userRole === 'admin' && (
+                  <Link to='/uhome'>
+                    <Button className="go-to-books-button" style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
+                    >  GO TO BOOKS
+                    </Button>
+                  </Link>
+                )}
                 <Link to='/'>
                   <Button className="logout-button" style={{ backgroundColor: '#ff4500', color: 'white', marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
                     LOGOUT
@@ -116,13 +117,13 @@ const AdminHome = () => {
       <div className="container w-75 mt-4 pt-4">
 
 
-
+{userRole === 'admin' && (
         <Link to="/aadd">
           <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
             <ion-icon name="person-add-outline" size="large"></ion-icon>
           </Button>
         </Link>
-
+)}
 
 
 
