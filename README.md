@@ -15,3 +15,10 @@ Integration with a database for seamless data retrieval and storage.
 Robust security measures to protect user data.
 Comprehensive documentation and user guides for easy usage.
 Overall, the Book Store Application seamlessly combines the timeless appeal of books with modern technology, enhancing the accessibility and enjoyment of reading for users while simplifying library management for administrators.
+
+
+LOGIN CREDENTIALS
+
+               username : password
+admin login:   admin123  admin@123	
+user login :   user123   user@123
