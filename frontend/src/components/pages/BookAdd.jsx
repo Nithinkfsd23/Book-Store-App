@@ -1,24 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom"
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Segment } from 'semantic-ui-react';
-import { Link } from 'react-router-dom'
-import axios from 'axios'
-import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import '../AdminAdd.css';
-import addBooks from '../../utils/images/addBooks.jpg'
+import addBooks from '../../utils/images/addBooks.jpg';
 import { CSSTransition } from 'react-transition-group';
 
 const BookAdd = (props) => {
-
   const [inputs, setInputs] = useState(props.data);
-  const [userToken, setUserToken] = useState(sessionStorage.getItem("userToken"))
-  const [userID, setUserID] = useState(sessionStorage.getItem("userId"))
-  const [userRole, setUserrole] = useState(sessionStorage.getItem("userRole"));
-  console.log(userRole)
+  const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken'));
+  const [userID, setUserID] = useState(sessionStorage.getItem('userId'));
+  const [userRole, setUserrole] = useState(sessionStorage.getItem('userRole'));
   const navigate = useNavigate();
 
   const [showHeader, setShowHeader] = useState(false);
-
 
   useEffect(() => {
     setShowHeader(true);
@@ -27,7 +24,6 @@ const BookAdd = (props) => {
   // To display form validation warning
   const [displayNameWarn, setDisplayNameWarn] = useState(false);
   const [displayAuthorWarn, setdisplayAuthorWarn] = useState(false);
-  const [displayImageWarn, setDisplayImageWarn] = useState(false);
   const [displayGenreWarn, setDisplayGenreWarn] = useState(false);
   const [displayLanguagesWarn, setDisplayLanguagesWarn] = useState(false);
   const [displayRentalPeriodWarn, setDisplayRentalPeriodWarn] = useState(false);
@@ -36,13 +32,10 @@ const BookAdd = (props) => {
   const [displayIsbnNumberWarn, setDisplayIsbnNumberWarn] = useState(false);
   const [displayPublicationYearWarn, setDisplayPublicationYearWarn] = useState(false);
 
-
   // To handle inputs from the form
   const inputHandler = (e) => {
-
     setDisplayNameWarn(false);
     setdisplayAuthorWarn(false);
-    setDisplayImageWarn(false);
     setDisplayGenreWarn(false);
     setDisplayLanguagesWarn(false);
     setDisplayRentalPeriodWarn(false);
@@ -54,40 +47,35 @@ const BookAdd = (props) => {
     const { name, value } = e.target;
 
     setInputs({
-      ...inputs, [name]: value
+      ...inputs,
+      [name]: value,
     });
-    console.log(inputs);
-  }
-
+  };
 
   // Function to handle inputs when submit button is clicked
-
   const submitHandler = () => {
-
     // Check if any of the required fields are empty and set the corresponding warnings
-    setDisplayNameWarn(inputs.bookName === "");
-    setdisplayAuthorWarn(inputs.author === "");
-    setDisplayImageWarn(inputs.image === "");
-    setDisplayGenreWarn(inputs.genre === "");
-    setDisplayLanguagesWarn(inputs.languages === "");
-    setDisplayRentalPeriodWarn(inputs.rentalPeriod === "");
-    setDisplayDescriptionWarn(inputs.description === "");
-    setDisplayAvailabilityStatusWarn(inputs.availabilityStatus === "");
-    setDisplayIsbnNumberWarn(inputs.isbnNumber === "");
-    setDisplayPublicationYearWarn(inputs.publicationYear === "");
+    setDisplayNameWarn(inputs.bookName === '');
+    setdisplayAuthorWarn(inputs.author === '');
+    setDisplayGenreWarn(inputs.genre === '');
+    setDisplayLanguagesWarn(inputs.languages === '');
+    setDisplayRentalPeriodWarn(inputs.rentalPeriod === '');
+    setDisplayDescriptionWarn(inputs.description === '');
+    setDisplayAvailabilityStatusWarn(inputs.availabilityStatus === '');
+    setDisplayIsbnNumberWarn(inputs.isbnNumber === '');
+    setDisplayPublicationYearWarn(inputs.publicationYear === '');
 
     // Check if any of the required fields are empty and prevent form submission
     if (
-      inputs.bookName === "" ||
-      inputs.image === "" ||
-      inputs.author === "" ||
-      inputs.genre === "" ||
-      inputs.languages === "" ||
-      inputs.rentalPeriod === "" ||
-      inputs.description === "" ||
-      inputs.availabilityStatus === "" ||
-      inputs.isbnNumber === "" ||
-      inputs.publicationYear === ""
+      inputs.bookName === '' ||
+      inputs.author === '' ||
+      inputs.genre === '' ||
+      inputs.languages === '' ||
+      inputs.rentalPeriod === '' ||
+      inputs.description === '' ||
+      inputs.availabilityStatus === '' ||
+      inputs.isbnNumber === '' ||
+      inputs.publicationYear === ''
     ) {
       return;
     }
@@ -98,42 +86,46 @@ const BookAdd = (props) => {
       role: userRole,
       bookName: inputs.bookName,
       author: inputs.author,
-      image: inputs.image,
       genre: inputs.genre,
       languages: inputs.languages,
       rentalPeriod: inputs.rentalPeriod,
       description: inputs.description,
       availabilityStatus: inputs.availabilityStatus,
       isbnNumber: inputs.isbnNumber,
-      publicationYear: inputs.publicationYear
-    }
+      publicationYear: inputs.publicationYear,
+    };
+
     // post function
-    if (props.method === "post") {
-      axios.post(`http://localhost:5000/api/postbdata`, data)
+    if (props.method === 'post') {
+      axios
+        .post('http://localhost:5000/api/postbdata', data)
         .then((response) => {
-          if (response.data.message === "Book added successfully") {
+          if (response.data.message === 'Book added successfully') {
             Swal.fire('', response.data.message, 'success');
             navigate('/uhome');
-          }
-          else {
+          } else {
             Swal.fire('Sorry', response.data.message, '');
           }
         })
-        .catch((err) => { console.log(err) })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     // update function
-    if (props.method === "put") {
-      axios.put(`http://localhost:5000/api/putbdata/${inputs._id}`, inputs)
+    if (props.method === 'put') {
+      axios
+        .put(`http://localhost:5000/api/putbdata/${inputs._id}`, inputs)
         .then((response) => {
-          if (response.data.message === "Updated successfully") {
+          if (response.data.message === 'Updated successfully') {
             Swal.fire('', response.data.message, 'success');
             window.location.reload(false);
-          }
-          else {
+          } else {
             Swal.fire('Sorry', response.data.message, '');
           }
         })
-        .catch((err) => { console.log(err) })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -169,34 +161,30 @@ const BookAdd = (props) => {
   ];
 
   return (
-
-    <div style={{ backgroundImage: `url(${addBooks})`, backgroundSize: "cover", height: "100vh" }}>
+    <div style={{ backgroundImage: `url(${addBooks})`, backgroundSize: 'cover', height: '100vh' }}>
       <div className="row">
         <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
         {/* Users Form */}
         <div className="container-form mt-5 pt-5">
           {/* Form header */}
-          <CSSTransition
-            in={showHeader}
-            timeout={500} // Duration of the animation in milliseconds
-            classNames="fade" // Define your animation class
-            unmountOnExit
-          >
+          <CSSTransition in={showHeader} timeout={500} classNames="fade" unmountOnExit>
             <h3 className="form-header">ADD BOOKS</h3>
           </CSSTransition>
           <br></br>
           <div className="row">
             <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
               <div className="row g-1">
-
                 {/* Name */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="bookName" className="form-label">Name:</label>
+                      <label htmlFor="bookName" className="form-label">
+                        Name:
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                      <input type="text"
+                      <input
+                        type="text"
                         id="bookName"
                         className="form-control"
                         name="bookName"
@@ -204,7 +192,6 @@ const BookAdd = (props) => {
                         value={inputs.bookName}
                         onChange={inputHandler}
                         required
-                        
                       />
                       {displayNameWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Name is required</p>
@@ -212,13 +199,13 @@ const BookAdd = (props) => {
                     </div>
                   </div>
                 </div>
-
-
                 {/* Author */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="author" className="form-label">Author:</label>
+                      <label htmlFor="author" className="form-label">
+                        Author:
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
                       <input
@@ -228,24 +215,22 @@ const BookAdd = (props) => {
                         name="author"
                         placeholder="Enter author"
                         value={inputs.author}
-                        onChange={inputHandler} // Handle changes for "Author" input
+                        onChange={inputHandler}
                         required
-                       
                       />
-                      {/* Add a warning for empty "Author" input */}
                       {displayAuthorWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Author is required</p>
                       )}
                     </div>
                   </div>
                 </div>
-
-              
                 {/* Genre */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="genre" className="form-label">Genre</label>
+                      <label htmlFor="genre" className="form-label">
+                        Genre
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
                       <select
@@ -256,7 +241,6 @@ const BookAdd = (props) => {
                         value={inputs.genre}
                         onChange={inputHandler}
                         required
-                        
                       >
                         <option value="" disabled>
                           Select a genre
@@ -270,17 +254,16 @@ const BookAdd = (props) => {
                       {displayGenreWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Genre is required</p>
                       )}
-
                     </div>
                   </div>
                 </div>
-
-
                 {/* review */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="review" className="form-label">review:</label>
+                      <label htmlFor="review" className="form-label">
+                        review:
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
                       <input
@@ -290,21 +273,19 @@ const BookAdd = (props) => {
                         name="review"
                         placeholder="review"
                         value={inputs.review}
-                        onChange={inputHandler} //
+                        onChange={inputHandler}
                         required
-
                       />
-
                     </div>
                   </div>
                 </div>
-
-
                 {/* Languages */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="languages" className="form-label">Languages:</label>
+                      <label htmlFor="languages" className="form-label">
+                        Languages:
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
                       <select
@@ -316,33 +297,32 @@ const BookAdd = (props) => {
                         onChange={inputHandler}
                         required
                       >
-                        <option value="" disabled>Select a language</option>
+                        <option value="" disabled>
+                          Select a language
+                        </option>
                         <option value="English">English</option>
                         <option value="Hindi">Hindi</option>
                         <option value="French">French</option>
                         <option value="German">German</option>
                         <option value="Other">Other</option>
-
                       </select>
-
-
                       {displayLanguagesWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Languages are required</p>
                       )}
-
-
                     </div>
                   </div>
                 </div>
-
                 {/* RentalPeriod */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="rentalPeriod" className="form-label">Rental Period</label>
+                      <label htmlFor="rentalPeriod" className="form-label">
+                        Rental Period
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                      <input type="text"
+                      <input
+                        type="text"
                         id="rentalPeriod"
                         className="form-control"
                         name="rentalPeriod"
@@ -354,20 +334,20 @@ const BookAdd = (props) => {
                       {displayRentalPeriodWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Rental Period is required</p>
                       )}
-
-
                     </div>
                   </div>
                 </div>
-
                 {/* description */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="description" className="form-label">Description</label>
+                      <label htmlFor="description" className="form-label">
+                        Description
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                      <input type="text"
+                      <input
+                        type="text"
                         id="description"
                         className="form-control"
                         name="description"
@@ -376,20 +356,19 @@ const BookAdd = (props) => {
                         onChange={inputHandler}
                         required
                       />
-
                       {displayDescriptionWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Description is required</p>
                       )}
-
                     </div>
                   </div>
                 </div>
-
                 {/* Availability Status */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="availabilityStatus" className="form-label">Availability</label>
+                      <label htmlFor="availabilityStatus" className="form-label">
+                        Availability
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
                       <select
@@ -400,25 +379,30 @@ const BookAdd = (props) => {
                         value={inputs.availabilityStatus}
                         onChange={inputHandler}
                         required
-                      > <option value="" disabled>Select availability status</option>
+                      >
+                        <option value="" disabled>
+                          Select availability status
+                        </option>
                         <option value="Available">Available</option>
-                        <option value="Rented">Rented</option></select>
+                        <option value="Rented">Rented</option>
+                      </select>
                       {displayAvailabilityStatusWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Availability is required</p>
                       )}
-
                     </div>
                   </div>
                 </div>
-
                 {/* isbnNumber */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="isbnNumber" className="form-label">ISBN Number</label>
+                      <label htmlFor="isbnNumber" className="form-label">
+                        ISBN Number
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                      <input type="text"
+                      <input
+                        type="text"
                         id="isbnNumber"
                         className="form-control"
                         name="isbnNumber"
@@ -430,16 +414,16 @@ const BookAdd = (props) => {
                       {displayIsbnNumberWarn && (
                         <p className="fw-light fst-italic text-start text-danger">ISBN Number is required</p>
                       )}
-
                     </div>
                   </div>
                 </div>
-
                 {/* PublicationYear */}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex">
-                      <label htmlFor="publicationYear" className="form-label">Publication Year</label>
+                      <label htmlFor="publicationYear" className="form-label">
+                        Publication Year
+                      </label>
                     </div>
                     <div className="col col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
                       <select
@@ -450,45 +434,43 @@ const BookAdd = (props) => {
                         onChange={inputHandler}
                         required
                       >
-                        <option value="" disabled>Select publication year</option>
+                        <option value="" disabled>
+                          Select publication year
+                        </option>
                         {generatePublicationYearOptions()}
                       </select>
                       {displayPublicationYearWarn && (
                         <p className="fw-light fst-italic text-start text-danger">Publication Year is required</p>
                       )}
-
-
                     </div>
                   </div>
                 </div>
-
-
-
-
                 {/* Button*/}
                 <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                   <div className="row">
                     {/* offset */}
-                    <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    </div>
+                    <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3"></div>
                     {/* Button Submit*/}
                     <div className="col col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                      <button className="form-button" onClick={submitHandler}>Submit</button>
+                      <button className="form-button" onClick={submitHandler}>
+                        Submit
+                      </button>
                     </div>
                     {/* Button */}
                     <div className="col col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 mb-4">
-                      <a href="/uhome"><button className="form-button back-button">Back to Dashboard</button></a>
+                      <a href="/uhome">
+                        <button className="form-button back-button">Back to Dashboard</button>
+                      </a>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default BookAdd
+export default BookAdd;

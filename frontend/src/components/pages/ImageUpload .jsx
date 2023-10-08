@@ -1,52 +1,47 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ImageUpload = ({ bookId }) => {
+function ImageUpload() {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
-  };
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const imageData = reader.result; // This will be the Base64 data
+        setSelectedImage(imageData);
 
-  const handleImageUpload = () => {
-    if (!selectedImage) {
-      alert('Please select an image.');
-      return;
+        // Create a FormData object and append the selected image file
+        const formData = new FormData();
+        formData.append('image', file);
+
+        // Make an Axios POST request to upload the image
+        axios
+          .post('http://localhost:5000/api/upload-image', formData)
+          .then((response) => {
+            console.log(response.data); // Handle the server response as needed
+          })
+          .catch((error) => {
+            console.error('Image upload failed:', error);
+          });
+      };
     }
-
-    const formData = new FormData();
-    formData.append('image', selectedImage);
-
-    axios
-      .post(`http://localhost:5000/api/upload/${bookId}`, formData)
-      .then((response) => {
-        if (response.data.message === 'Image uploaded successfully') {
-          alert('Image uploaded successfully');
-          setSelectedImage(null);
-
-          // You can handle any necessary actions after successful upload here
-          // For example, update the UI to show the uploaded image, etc.
-        } else {
-          alert('Image upload failed');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        alert('Image upload failed internal error');
-      });
   };
 
   return (
     <div>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-      />
-      <button onClick={handleImageUpload}>Upload Image</button>
+      {selectedImage && (
+        <div>
+          <h2>Selected Image</h2>
+          <img src={selectedImage} alt="Selected" />
+        </div>
+      )}
+
+      <input type="file" accept="image/*" onChange={handleImageUpload} />
     </div>
   );
-};
+}
 
 export default ImageUpload;

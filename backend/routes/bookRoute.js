@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
+const bookData = require('../model/bookData'); // Import your Book model
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-
-const bookData = require('../model/bookData'); 
 
 // Get all book data
 router.get('/getbdata', async (req, res) => {
@@ -29,11 +27,12 @@ router.post('/postbdata', async (req, res) => {
     }
 });
 
-// Update book data
+// Update book data (without image)
 router.put('/putbdata/:id', async (req, res) => {
-    try { 
+    try {
         const item = req.body;
         const index = req.params.id;
+
         await bookData.findByIdAndUpdate(index, item).exec();
         res.json({ message: "Updated successfully" });
     } catch (error) {
@@ -51,7 +50,5 @@ router.delete('/delbdata/:id', async (req, res) => {
         res.json({ message: 'Deletion not successful' });
     }
 });
-
-
 
 module.exports = router;

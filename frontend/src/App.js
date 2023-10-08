@@ -21,13 +21,13 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         
         <Route path='/imageUpload/:bookId' element={<ImageUpload/>} />
-        <Route path='/rent' element={<RentForm />} />
+        <Route path='/rentbook/:bookId' element={<RentForm />} />
         <Route path='/uhome' element={<Main child={<UserHome />} />} />
         <Route path="/badd" element={<Main child={<BookAdd method="post" data={
           {
             bookName: "",
             author: "",
-            image: "",
+            imageData: "",
             review:"",
             genre: "",
             rentalPeriod: "",

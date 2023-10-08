@@ -1,41 +1,57 @@
+//  new route for renting a book
+
 const express = require('express');
 const router = express.Router();
-
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
-
-const userData = require('../model/userData');
-const bookData = require('../model/bookData')
-const rentData = require('../model/rentData')
+const bookData = require('../model/bookData');
 
 
-router.get('/getBookById/:id', async (req, res) => {
-    try {
-        const data = await bookData.find();
-        res.json({ "message": "Success", data });
-    } catch (error) {
-        res.json({ message: "Not successful" });
-    }
-});
-
-router.get('/getUserById/:id', async (req, res) => {
-    try {
-        const data = await userData.find();
-        res.json({ "message": "Success", data });
-    } catch (error) {
-        res.json({ message: "Not successful" });
-    }
-});
-
-
-router.post('/postRentData', async (req, res) => {
+// Define a route to get book data by ID
+router.get('/getbdata/:id', async (req, res) => {
     try {
         const item = req.body;
-        const newdata = new rentData(item);
-        await newdata.save();
-        res.json({ message: "Post successfully" });
+      const bookId = req.params.id;
+      
+      // Use your bookData model to find the book by ID
+      const book = await bookData.findById(bookId,item);
+  
+      if (!book) {
+        return res.status(404).json({ message: 'Book not found' });
+      }
+  
+      // Return the book data
+      res.json({ message: 'Success', data: book });
     } catch (error) {
-        res.json({ message: "Post not successful" });
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
+
+
+router.post('/rentbook/:id', async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        const book = await bookData.findById(bookId);
+
+        if (!book) {
+            return res.json({ message: "Book not found" });
+        }
+  
+        // Autofill the rent form fields with book information
+        const rentInfo = {
+            bookName: book.bookName,
+            author: book.author,
+            libraryId: req.body.libraryId,
+            name: req.body.name,
+            contactNumber: req.body.contactNumber,
+        };
+
+        // Change the availability status of the book to "Rented"
+        book.availabilityStatus = "Rented";
+        await book.save();
+
+        res.json({ message: "Book rented successfully", rentInfo });
+    } catch (error) {
+        res.json({ message: "Renting not successful" });
     }
 });
 

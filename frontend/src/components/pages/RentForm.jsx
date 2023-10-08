@@ -1,128 +1,136 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Form, Button } from 'react-bootstrap';
-import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
+const RentForm = () => {
+  const { bookId } = useParams();
+  const navigate = useNavigate();
 
-const RentForm = ({ bookId, userId }) => {
-  const [formData, setFormData] = useState({
+  const [bookInfo, setBookInfo] = useState({
     bookName: '',
-    bookAuthor: '',
+    author: '',
     libraryId: '',
     name: '',
     contactNumber: '',
   });
+  const [rentedSuccessfully, setRentedSuccessfully] = useState(false);
 
   useEffect(() => {
-    // Fetch book data from the "books" collection based on bookId
-    axios
-      .get(`http://localhost:5000/api/getBookById/${bookId}`)
+    // Fetch book details based on bookId
+    axios.get(`http://localhost:5000/api/getbdata/${bookId}`)
       .then((response) => {
-        if (response.data.message === 'Success') {
-          const bookData = response.data.data;
-          // Populate the form fields with the fetched book data
-          setFormData({
-            bookName: bookData.name,
-            bookAuthor: bookData.author,
-            libraryId: bookData.libraryId,
+        const { data } = response.data;
+        if (data) {
+          // Autofill the rent form fields with book information
+          setBookInfo({
+            bookName: data.bookName,
+            author: data.author,
+            libraryId: '',
+            name: '',
+            contactNumber: '',
           });
-        } else {
-          Swal.fire('Sorry', response.data.message, '');
         }
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [bookId]);
 
-    // Fetch user data from the "users" collection based on userId
-    axios
-      .get(`http://localhost:5000/api/getUserById/${userId}`)
-      .then((response) => {
-        if (response.data.message === 'Success') {
-          const userData = response.data.data;
-          // Populate the form fields with the fetched user data
-          setFormData({
-            ...formData,
-            name: userData.name,
-            contactNumber: userData.contactNumber,
-          });
-        } else {
-          Swal.fire('Sorry', response.data.message, '');
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [bookId, userId]);
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setBookInfo({
+      ...bookInfo,
       [name]: value,
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Send the rent request data to backend or perform any other actions.
-    console.log(formData);
+  const handleRent = () => {
+    // Make a POST request to rent the book
+    axios.post(`http://localhost:5000/api/rentbook/${bookId}`, bookInfo)
+      .then((response) => {
+        const { message, rentInfo } = response.data;
+        if (message === 'Book rented successfully') {
+          // Display a success message and clear the form
+          setRentedSuccessfully(true);
+          setBookInfo({
+            bookName: '',
+            author: '',
+            libraryId: '',
+            name: '',
+            contactNumber: '',
+          });
+          // You can navigate to a different page or perform other actions here
+        } else {
+          // Handle error cases
+          console.error(message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const goBack = () => {
+    window.history.back(); // Use window.history.back() to go back to the previous page
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Rent Request Form</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Book Name</Form.Label>
-          <Form.Control
+    <div>
+      <h2>Rent Book: {bookInfo.bookName}</h2>
+      
+      {rentedSuccessfully && <p>Book rented successfully!</p>}
+
+        
+      <form>
+        <div>
+          <label>Book Name:</label>
+          <input
             type="text"
             name="bookName"
-            value={formData.bookName}
-            onChange={handleChange}
-            required
+            value={bookInfo.bookName}
+            disabled
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Book Author</Form.Label>
-          <Form.Control
+        </div>
+        <div>
+          <label>Author:</label>
+          <input
             type="text"
-            name="bookAuthor"
-            value={formData.bookAuthor}
-            onChange={handleChange}
-            required
+            name="author"
+            value={bookInfo.author}
+            disabled
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Library ID Number</Form.Label>
-          <Form.Control
+        </div>
+        <div>
+          <label>Library ID:</label>
+          <input
             type="text"
             name="libraryId"
-            value={formData.libraryId}
-            onChange={handleChange}
-            required
+            value={bookInfo.libraryId}
+            onChange={handleInputChange}
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Name of the User</Form.Label>
-          <Form.Control
+        </div>
+        <div>
+          <label>Name:</label>
+          <input
             type="text"
-            name="userName"
-            value={formData.userName}
-            onChange={handleChange}
-            required
+            name="name"
+            value={bookInfo.name}
+            onChange={handleInputChange}
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Contact Number</Form.Label>
-          <Form.Control
-            type="tel"
+        </div>
+        <div>
+          <label>Contact Number:</label>
+          <input
+            type="text"
             name="contactNumber"
-            value={formData.contactNumber}
-            onChange={handleChange}
-            required
+            value={bookInfo.contactNumber}
+            onChange={handleInputChange}
           />
-        </Form.Group>
-        <Button type="submit" variant="primary">
-          Submit
-        </Button>
-      </Form>
+        </div>
+
+        <button onClick={goBack}>Go Back</button> {/* Use the goBack function to navigate back */}
+        <button type="button" onClick={handleRent}>Rent Book</button>
+      </form>
     </div>
   );
 };

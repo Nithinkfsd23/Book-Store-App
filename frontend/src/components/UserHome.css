@@ -119,3 +119,26 @@
   height: 100vh; /* Adjust the height as needed */
   overflow: auto; /* Allow content to be scrolled over the background */
 }
+
+/* Define styles for custom buttons */
+.custom-button {
+  background-color: #008080;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 10px; /* Add margin between buttons */
+  transition: transform 0.2s; /* Add a transform animation on hover */
+}
+
+.custom-button:hover {
+  transform: scale(1.1); /* Increase the size of the button on hover */
+}
+
+/* Define styles for custom links */
+.custom-link {
+  text-decoration: none; /* Remove underline from links */
+  margin-right: 10px; /* Add margin between links and buttons */
+}
