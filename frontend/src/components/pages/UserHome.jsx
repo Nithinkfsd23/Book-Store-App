@@ -91,6 +91,22 @@ const UserHome = () => {
     setClickedCard(card);
   };
 
+
+// Check the role admin or user before rendering the form
+const isAuthorized = userRole === 'admin' || userRole === 'user';
+
+if (!isAuthorized) {
+  return (
+    <div>
+      <h2>Access Denied</h2>
+      <p>You do not have permission to access this page.</p>
+    </div>
+  );
+}
+
+
+
+
   // To display users data
   let finalJSX = (
 

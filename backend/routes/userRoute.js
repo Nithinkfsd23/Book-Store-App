@@ -29,23 +29,14 @@ router.get('/getudata/:token/:role',adm, async (req, res) => {
 });
 
 // Post user data to the database 
-router.post('/postudata',  (req, res) => {
+router.post('/postudata', async (req, res) => {
     try {
-
         const item = req.body;
         const newdata = new userData(item);
-
-        jwt.verify(req.body.token, "ict",
-            (error, decoded) => {
-                if (decoded && decoded.email) {
-                    newdata.save();
-                    res.json({ message: "User added successfully" });
-                } else {
-                    res.json({ message: "Unauthorised User" })
-                }
-            })
+        await newdata.save();
+        res.json({ message: "User added successfully" });
     } catch (error) {
-        res.json({ message: "Post not successful" });
+        res.status(500).json({ message: "Post not successful" });
     }
 });
 

@@ -6,6 +6,8 @@ import { Button } from 'semantic-ui-react'
 import BG2 from '../../utils/images/BG2.jpg'
 import { useState } from 'react'
 import '../Login.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -15,7 +17,9 @@ const Login = () => {
   const [user, setUser] = useState({});
   const [showAlert, setShowAlert] = useState(false); // State variable for showing the alert
   const [alertMessage, setAlertMessage] = useState(""); // State variable to hold the alert message
-
+  const [showPassword, setShowPassword] = useState(false);
+  const eyeIcon = <FontAwesomeIcon icon={faEye} />;
+  const eyeSlashIcon = <FontAwesomeIcon icon={faEyeSlash} />;
 
   // Handle input changes
   const handleInputChange = (event) => {
@@ -28,6 +32,10 @@ const Login = () => {
     console.log(user)
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   // Handle form submission
   const handleSubmit = (event) => {
 
@@ -35,7 +43,7 @@ const Login = () => {
 
     event.preventDefault();
     let err;
- 
+
     axios
       .post("http://localhost:5000/api/login", user)
       .then((response) => {
@@ -118,13 +126,21 @@ const Login = () => {
             </div>
             <div>
               <label>Password:</label>
+              <div className="password-input">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder="Enter your password"
                 onChange={handleInputChange}
                 required
               />
+               <span
+                  className="toggle-password"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? eyeSlashIcon : eyeIcon}
+                </span>
+            </div>
             </div>
             <div className="d-flex flex-column">
               <button type="submit">Login</button>

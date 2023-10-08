@@ -154,6 +154,17 @@ const AdminAdd = (props) => {
     }
   };
 
+// Check if the user is an admin before rendering the form
+  const isAdmin = userRole === 'admin';
+
+  if (!isAdmin) {
+    return (
+      <div>
+        <h2>Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+      </div>
+    );
+  }
 
   return (
 

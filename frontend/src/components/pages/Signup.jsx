@@ -6,6 +6,8 @@ import '../Signup.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Signup = () => {
 
@@ -31,6 +33,10 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState('');
   const [libraryIdError, setLibraryIdError] = useState('');
   const [contactNumberError, setContactNumberError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const eyeIcon = <FontAwesomeIcon icon={faEye} />;
+  const eyeSlashIcon = <FontAwesomeIcon icon={faEyeSlash} />;
+
 
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   const usernameRegex = /^[A-Za-z0-9_]{5,}$/;
@@ -43,6 +49,10 @@ const Signup = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const validateForm = () => {
@@ -159,9 +169,9 @@ const Signup = () => {
                 name="name"
                 value={formData.name}
                 onChange={inputHandler}
-                
+
               />
-               <span className="error">{nameError}</span>
+              <span className="error">{nameError}</span>
             </div>
             <div>
               <label>Email:</label>
@@ -170,9 +180,9 @@ const Signup = () => {
                 name="email"
                 value={formData.email}
                 onChange={inputHandler}
-                
+
               />
-               <span className="error">{emailError}</span>
+              <span className="error">{emailError}</span>
             </div>
             <div>
               <label>Username:</label>
@@ -181,21 +191,29 @@ const Signup = () => {
                 name="username"
                 value={formData.username}
                 onChange={inputHandler}
-                
+
               />
               <span className="error">{usernameError}</span>
             </div>
             <div>
               <label>Password:</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={inputHandler}
-                
-              />
-                <span className="error">{passwordError}</span>
+              <div className="password-input">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={inputHandler}
+                />
+                <span
+                  className="toggle-password"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? eyeSlashIcon : eyeIcon}
+                </span>
+              </div>
+              <span className="error">{passwordError}</span>
             </div>
+            
             <div>
               <label>Library ID:</label>
               <input
@@ -203,9 +221,9 @@ const Signup = () => {
                 name="libraryId"
                 value={formData.libraryId}
                 onChange={inputHandler}
-                
+
               />
-                <span className="error">{libraryIdError}</span>
+              <span className="error">{libraryIdError}</span>
             </div>
             <div>
               <label>Contact Number:</label>
@@ -214,7 +232,7 @@ const Signup = () => {
                 name="contactNumber"
                 value={formData.contactNumber}
                 onChange={inputHandler}
-                
+
               />
               <span className="error">{contactNumberError}</span>
             </div>
