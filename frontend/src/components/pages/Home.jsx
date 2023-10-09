@@ -80,13 +80,13 @@ const Home = () => {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                
+
               </ul>
               <form class="d-flex">
                 <Link to="/login">
                   <Button
                     style={{
-                      backgroundColor:  'rgba(0, 128, 128, 0.75)',
+                      backgroundColor: 'rgba(0, 128, 128, 0.75)',
                       color: 'white',
                       padding: '10px 20px',
                       border: 'none',
@@ -95,7 +95,7 @@ const Home = () => {
                       cursor: 'pointer',
                       transition: 'background-color 0.3s',
                     }}
-                    className="login-button" 
+                    className="login-button"
                   >
                     LOGIN
                   </Button>
@@ -114,7 +114,7 @@ const Home = () => {
                     }}
                     className="signup-button"
                   >
-                    
+
                     SIGNUP
                   </Button>
                 </Link>
@@ -184,9 +184,9 @@ const Home = () => {
                 </div>
                 {/* button  go back to the card view */}
                 <div>
-                <button onClick={() => setClickedCard(null)} className="go-back-button">
-                  Go Back
-                </button>
+                  <button onClick={() => setClickedCard(null)} className="go-back-button">
+                    Go Back
+                  </button>
                 </div>
               </div>
             </div>
@@ -215,7 +215,7 @@ const Home = () => {
                           />
                         )}
 
-                        <div className="card-body animated"style={{ height: '200px' }}>
+                        <div className="card-body animated" style={{ height: '200px' }}>
                           <h5 className="card-title">{value.bookName}</h5>
                           <p className="card-text">
                             <strong>Author:</strong> {value.author} {/* Display Author */}

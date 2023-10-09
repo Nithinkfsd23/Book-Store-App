@@ -161,33 +161,35 @@ const BookAdd = (props) => {
 
 
 
-// Check the role admin or user before rendering the form
-const isAuthorized = userRole === 'admin' || userRole === 'user';
+  // Check the role admin or user before rendering the form
+  const isAuthorized = userRole === 'admin' || userRole === 'user';
 
-if (!isAuthorized) {
-  return (
-    <div>
-      <h2>Access Denied</h2>
-      <p>You do not have permission to access this page.</p>
-      <Link to="/login">
+  if (!isAuthorized) {
+    return (
+      <div>
+        <h2>Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+        <Link to="/login">
           <Button primary>Login</Button>
         </Link>
-    </div>
-  );
-}
+      </div>
+    );
+  }
 
 
 
 
 
   return (
-    <div style={{ backgroundImage: `url(${addBooks})`, 
-    backgroundSize: 'cover', 
-    height: '100vh',
-    backgroundRepeat:'no-repeat',
-    backgroundAttachment:'fixed',
-    backgroundPosition:'center',
-    overflow:'auto' }}>
+    <div style={{
+      backgroundImage: `url(${addBooks})`,
+      backgroundSize: 'cover',
+      height: '100vh',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
+      backgroundPosition: 'center',
+      overflow: 'auto'
+    }}>
       <div className="row">
         <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
         {/* Users Form */}
@@ -304,7 +306,7 @@ if (!isAuthorized) {
                         value={inputs.review}
                         onChange={inputHandler}
                         required
-                        
+
                       />
                     </div>
                   </div>

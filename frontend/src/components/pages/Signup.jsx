@@ -213,7 +213,7 @@ const Signup = () => {
               </div>
               <span className="error">{passwordError}</span>
             </div>
-            
+
             <div>
               <label>Library ID:</label>
               <input

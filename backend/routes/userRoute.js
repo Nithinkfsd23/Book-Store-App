@@ -8,7 +8,7 @@ const userData = require('../model/userData');
 const jwt = require("jsonwebtoken");
 const adm= require("../authz/adm")
 
-// Get user data for users page (no JWT authentication)
+// Get user data for users page
 router.get('/getudata/:token/:role',adm, async (req, res) => {
     const data = await userData.find();
     try {

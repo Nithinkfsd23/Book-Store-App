@@ -11,7 +11,7 @@ router.get('/getbdata/:id', async (req, res) => {
         const item = req.body;
       const bookId = req.params.id;
       
-      // Use your bookData model to find the book by ID
+      
       const book = await bookData.findById(bookId,item);
   
       if (!book) {

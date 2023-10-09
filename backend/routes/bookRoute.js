@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bookData = require('../model/bookData'); // Import your Book model
+const bookData = require('../model/bookData'); // ImporT Book model
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -37,7 +37,7 @@ res.json({ message: "Post not successful" });
 }
 })
 
-// Update book data (without image)
+// Update book data
 router.put('/putbdata/:id', async (req, res) => {
     try {
         const item = req.body;

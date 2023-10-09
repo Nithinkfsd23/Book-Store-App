@@ -17,7 +17,7 @@ function ImageUpload() {
         const formData = new FormData();
         formData.append('image', file);
 
-        // Make an Axios POST request to upload the image
+        // Axios POST request to upload the image
         axios
           .post('http://localhost:5000/api/upload-image', formData)
           .then((response) => {

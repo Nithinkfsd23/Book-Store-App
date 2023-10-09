@@ -116,7 +116,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center center;
-  height: 100vh; /* Adjust the height as needed */
+  height: 100vh; /* Adjust the height  */
   overflow: auto; /* Allow content to be scrolled over the background */
 }
 
@@ -177,7 +177,7 @@
 
 /* Apply the custom font to card-body, card-title, and card-text */
 .card-body {
-  font-family: 'Roboto', sans-serif; /* Use the custom font as a fallback */
+  font-family: 'Roboto', sans-serif; /*  custom font as a fallback */
   text-align: left;
   padding: 20px;
   transition: transform 0.3s;

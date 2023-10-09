@@ -79,13 +79,15 @@ const AdminHome = () => {
 
   // To display users data
   let finalJSX =
-    <div style={{ backgroundImage: `url(${adminNew})`, 
-    backgroundSize: "cover",
-     height: "100vh",
-     backgroundRepeat:'no-repeat',
-     backgroundAttachment:'fixed',
-     backgroundPosition:'center',
-     overflow:'auto' }}>
+    <div style={{
+      backgroundImage: `url(${adminNew})`,
+      backgroundSize: "cover",
+      height: "100vh",
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
+      backgroundPosition: 'center',
+      overflow: 'auto'
+    }}>
       <div className="row">
         <div className="col col-12 col-sm-12 col-md-12 col-lg-12"></div>
 

@@ -10,7 +10,7 @@ import { CSSTransition } from 'react-transition-group';
 
 
 const AdminAdd = (props) => {
-  // console.log("props data", props.data);
+
   const [inputs, setInputs] = useState(props.data);
   const [userToken, setUserToken] = useState(sessionStorage.getItem("userToken"))
   const [userID, setUserID] = useState(sessionStorage.getItem("userId"))
@@ -99,7 +99,7 @@ const AdminAdd = (props) => {
       setDisplayLibraryIdWarn(false);
     }
 
-    // Contact Number validation: Check if it's a valid phone number (you can adjust the regex as needed)
+    // Contact Number validation: Check if it's a valid phone number
     if (!/^[0-9]{10}$/.test(inputs.contactNumber)) {
       setDisplayContactNumberWarn(true);
       isValid = false;
@@ -154,7 +154,7 @@ const AdminAdd = (props) => {
     }
   };
 
-// Check if the user is an admin before rendering the form
+  // Check if the user is an admin before rendering the form
   const isAdmin = userRole === 'admin';
 
   if (!isAdmin) {
@@ -179,8 +179,8 @@ const AdminAdd = (props) => {
           {/* Form header */}
           <CSSTransition
             in={showHeader}
-            timeout={500} // Duration of the animation in milliseconds
-            classNames="fade" // Define your animation class
+            timeout={500}
+            classNames="fade"
             unmountOnExit
           >
             <h3 className="form-header">ADD USERS</h3>

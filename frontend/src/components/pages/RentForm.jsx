@@ -59,7 +59,7 @@ const RentForm = () => {
             name: '',
             contactNumber: '',
           });
-          // You can navigate to a different page or perform other actions here
+
         } else {
           // Handle error cases
           console.error(message);
@@ -125,7 +125,7 @@ const RentForm = () => {
           />
         </div>
 
-        {/* Add a Link to User Home */}
+        {/* Link to User Home */}
         <Link to="/uhome">
           <button type="button">Go Back</button>
         </Link>

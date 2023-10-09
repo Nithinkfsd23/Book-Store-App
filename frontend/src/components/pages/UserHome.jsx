@@ -19,6 +19,7 @@ const UserHome = () => {
   const [clickedCard, setClickedCard] = useState(null);
   const navigate = useNavigate();
 
+
   const logout = () => {
     sessionStorage.clear(); // Clear sessionStorage
     console.clear(); // Clear console output
@@ -92,20 +93,21 @@ const UserHome = () => {
   };
 
 
-// Check the role admin or user before rendering the form
-const isAuthorized = userRole === 'admin' || userRole === 'user';
+  // Check the role admin or user before rendering the form
+  const isAuthorized = userRole === 'admin' || userRole === 'user';
+  const isAdmin = userRole === 'admin';
 
-if (!isAuthorized) {
-  return (
-    <div>
-      <h2>Access Denied</h2>
-      <p>You do not have permission to access this page.</p>
-      <Link to="/login">
+  if (!isAuthorized) {
+    return (
+      <div>
+        <h2>Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+        <Link to="/login">
           <Button primary>Login</Button>
         </Link>
-    </div>
-  );
-}
+      </div>
+    );
+  }
 
 
 
@@ -118,192 +120,193 @@ if (!isAuthorized) {
         <div className="col col-12 col-sm-12 col-md-12 col-lg-12">
 
 
-        {/* navbar */}
-        <nav class="navbar navbar-expand-lg transparent-bg white-text">
-          <div class="container-fluid">
-            <a class="navbar-brand white-text" href="#">USER DASHBOARD</a>
+          {/* navbar */}
+          <nav class="navbar navbar-expand-lg transparent-bg white-text">
+            <div class="container-fluid">
+              <a class="navbar-brand white-text" href="#">USER DASHBOARD</a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
 
-              </ul>
-              <form class="d-flex" >
+                </ul>
+                <form class="d-flex" >
 
-                <Link to='/ahome'>
-                  <Button className="go-to-books-button" style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
-                  >  ADMIN DASHBOARD
+                  {isAdmin && (
+                    <Link to='/ahome'>
+                      <Button className="go-to-books-button" style={{ backgroundColor: '#008080', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}
+                      >  ADMIN DASHBOARD
+                      </Button>
+                    </Link>
+                  )}
+
+                  <Button className="logout-button" onClick={logout} style={{ backgroundColor: '#ff4500', color: 'white', marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
+                    LOGOUT
                   </Button>
-                </Link>
 
 
-                <Button className="logout-button" onClick={logout} style={{ backgroundColor: '#ff4500', color: 'white', marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '20px', fontSize: '15px', cursor: 'pointer' }}>
-                  LOGOUT
-                </Button>
-
-
-              </form>
+                </form>
+              </div>
             </div>
+          </nav>
+          {/* navbar end */}
+
+          {/* Conditional check for user login */}
+
+          <div className="container text-center mt-4">
+            <h2 className="user-data-heading">BOOKS </h2>
           </div>
-        </nav>
-        {/* navbar end */}
-
-{/* Conditional check for user login */}
-
-        <div className="container text-center mt-4">
-          <h2 className="user-data-heading">BOOKS </h2>
-        </div>
-      
-      
 
 
-      {clickedCard ? (
-        <div className="container ">
-          {/* Full card details */}
-          <div className="card expanded-card">
-            {/* Render all the card details here */}
-            <h1 className="expanded-card-title  ">{clickedCard.bookName}</h1>
-            <div className="expanded-card-details">
-              <p>
-                <strong>Author:</strong> {clickedCard.author}
-              </p>
-              <p>
-                <strong>Genre:</strong> {clickedCard.genre}
-              </p>
-              <p>
-                <strong>Review:</strong> {clickedCard.review}
-              </p>
-              <p>
-                <strong>Languages:</strong> {clickedCard.languages}
-              </p>
-              <p>
-                <strong>Rental Period:</strong> {clickedCard.rentalPeriod}
-              </p>
-              <p>
-                <strong>Status:</strong> {clickedCard.availabilityStatus}
-              </p>
-              <p>
-                <strong>ISBN Number:</strong> {clickedCard.isbnNumber}
-              </p>
-              <p>
-                <strong>Publication Year:</strong> {clickedCard.publicationYear}
-              </p>
-              <p>
-                <strong>Description:</strong> {clickedCard.description}
-              </p>
+
+
+          {clickedCard ? (
+            <div className="container ">
+              {/* Full card details */}
+              <div className="card expanded-card">
+                {/* Render all the card details here */}
+                <h1 className="expanded-card-title  ">{clickedCard.bookName}</h1>
+                <div className="expanded-card-details">
+                  <p>
+                    <strong>Author:</strong> {clickedCard.author}
+                  </p>
+                  <p>
+                    <strong>Genre:</strong> {clickedCard.genre}
+                  </p>
+                  <p>
+                    <strong>Review:</strong> {clickedCard.review}
+                  </p>
+                  <p>
+                    <strong>Languages:</strong> {clickedCard.languages}
+                  </p>
+                  <p>
+                    <strong>Rental Period:</strong> {clickedCard.rentalPeriod}
+                  </p>
+                  <p>
+                    <strong>Status:</strong> {clickedCard.availabilityStatus}
+                  </p>
+                  <p>
+                    <strong>ISBN Number:</strong> {clickedCard.isbnNumber}
+                  </p>
+                  <p>
+                    <strong>Publication Year:</strong> {clickedCard.publicationYear}
+                  </p>
+                  <p>
+                    <strong>Description:</strong> {clickedCard.description}
+                  </p>
+                </div>
+                {/*  button or link to go back to the card view */}
+                <div><button onClick={() => setClickedCard(null)} className="go-back-button">
+                  Go Back
+                </button></div>
+              </div>
             </div>
-            {/* Include a button or link to go back to the card view */}
-            <div><button onClick={() => setClickedCard(null)} className="go-back-button">
-              Go Back
-            </button></div>
-          </div>
-        </div>
-      ) : (
-        <div className="container w-75 mt-4 pt-4">
-          {userRole === 'admin' && (
-            <>
-              <Link to="/badd">
-                <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
-                  <FontAwesomeIcon
-                    icon={faBook}
-                    className="book-icon-animation"
-                    style={{
-                      fontSize: '48px', // Increase the size of the icon
-                      animation: 'rotateIcon 2s infinite', // Add animation
-                    }}
-                  />{' '}
-                  {/* Use the book icon */}
-                </Button>
-              </Link>
-            </>
-          )}
+          ) : (
+            <div className="container w-75 mt-4 pt-4">
+              {userRole === 'admin' && (
+                <>
+                  <Link to="/badd">
+                    <Button variant="success" className="mb-3" onClick={handleAddUserClick}>
+                      <FontAwesomeIcon
+                        icon={faBook}
+                        className="book-icon-animation"
+                        style={{
+                          fontSize: '48px', // Increase the size of the icon
+                          animation: 'rotateIcon 2s infinite', // Add animation
+                        }}
+                      />{' '}
 
-          <div className="row">
-            {loading ? (
-              <p>Loading data...</p>
-            ) : data && data.length > 0 ? (
-              data.map((value) => (
-                <div
-                  key={value._id}
-                  className={`col-md-4 mb-4 card-container ${clickedCard === value ? 'expanded-card' : ''}`}
-                  onClick={() => showFullCard(value)}
-                >
-                  <div className="card" style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}>
-                    {value.imageData && (
-                      <img
-                        src={`data:${value.imageData.contentType};base64,${Buffer.from(
-                          value.imageData.data
-                        ).toString('base64')}`}
-                        className="card-img-top"
-                        alt={value.bookName}
-                      />
-                    )}
+                    </Button>
+                  </Link>
+                </>
+              )}
 
-                    <div className="card-body animated" style={{ height: '250px' }}>
-                      <h5 className="card-title">{value.bookName}</h5>
-                      <p className="card-text">
-                        <strong>Author:</strong> {value.author} {/* Display Author */}
-                        <br />
-                        <strong>Genre:</strong> {value.genre}
-                        <br />
-                        <strong>Reviews:</strong> {value.review}
-                        <br />
-
-                        <strong>Status:</strong>{' '}
-                        {value.availabilityStatus === 'Available' ? (
-                          <span style={{ color: 'green' }}>{value.availabilityStatus}</span>
-                        ) : (
-                          <span style={{ color: 'red' }}>{value.availabilityStatus}</span>
+              <div className="row">
+                {loading ? (
+                  <p>Loading data...</p>
+                ) : data && data.length > 0 ? (
+                  data.map((value) => (
+                    <div
+                      key={value._id}
+                      className={`col-md-4 mb-4 card-container ${clickedCard === value ? 'expanded-card' : ''}`}
+                      onClick={() => showFullCard(value)}
+                    >
+                      <div className="card" style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}>
+                        {value.imageData && (
+                          <img
+                            src={`data:${value.imageData.contentType};base64,${Buffer.from(
+                              value.imageData.data
+                            ).toString('base64')}`}
+                            className="card-img-top"
+                            alt={value.bookName}
+                          />
                         )}
-                        <br />
-                        <strong>Description:</strong> {value.description}
-                        <br />
-                      </p>
-                    </div>
-                    <div className="card-footer">
-                      {/*image */}
-                      {userToken && (
-                        <>
-                          <Button variant="primary" className="custom-button" onClick={() => editReview(value)}>
-                            Review
-                          </Button>
-                          {/* Conditionally render the buttons based on the user's role */}
-                          {userRole === 'admin' && (
+
+                        <div className="card-body animated" style={{ height: '250px' }}>
+                          <h5 className="card-title">{value.bookName}</h5>
+                          <p className="card-text">
+                            <strong>Author:</strong> {value.author} {/* Display Author */}
+                            <br />
+                            <strong>Genre:</strong> {value.genre}
+                            <br />
+                            <strong>Reviews:</strong> {value.review}
+                            <br />
+
+                            <strong>Status:</strong>{' '}
+                            {value.availabilityStatus === 'Available' ? (
+                              <span style={{ color: 'green' }}>{value.availabilityStatus}</span>
+                            ) : (
+                              <span style={{ color: 'red' }}>{value.availabilityStatus}</span>
+                            )}
+                            <br />
+                            <strong>Description:</strong> {value.description}
+                            <br />
+                          </p>
+                        </div>
+                        <div className="card-footer">
+                          {/*image */}
+                          {userToken && (
                             <>
-                              <Button variant="success" className="custom-button" onClick={() => updateBook(value)}>
-                                Edit{/* Edit button */}
-                              </Button>{' '}
-                              <Button variant="danger" className="custom-button" onClick={() => deleteBook(value._id)}>
-                                Delete
-                              </Button>{/* Delete button */}
+                              <Button variant="primary" className="custom-button" onClick={() => editReview(value)}>
+                                Review
+                              </Button>
+                              {/* Conditionally render the buttons based on the user's role */}
+                              {userRole === 'admin' && (
+                                <>
+                                  <Button variant="success" className="custom-button" onClick={() => updateBook(value)}>
+                                    Edit{/* Edit button */}
+                                  </Button>{' '}
+                                  <Button variant="danger" className="custom-button" onClick={() => deleteBook(value._id)}>
+                                    Delete
+                                  </Button>{/* Delete button */}
+                                </>
+                              )}
+                              <Link to="/rentbook/:id" className="custom-link">
+                                {/* Add Link component here */}
+                                <Button variant="primary" className="custom-button">
+                                  Rent
+                                </Button>
+                              </Link>{/* Rent button */}
                             </>
                           )}
-                          <Link to="/rentbook/:id" className="custom-link">
-                            {/* Add Link component here */}
-                            <Button variant="primary" className="custom-button">
-                              Rent
-                            </Button>
-                          </Link>{/* Rent button */}
-                        </>
-                      )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No data available...</p>
-            )}
-          </div>
+                  ))
+                ) : (
+                  <p>No data available...</p>
+                )}
+              </div>
+            </div>
+          )}
+
+
+
         </div>
-      )}
-
-
-     
       </div>
-      </div>     
     </div>
   );
 

@@ -101,7 +101,7 @@ const Login = () => {
           </Button>
         </Link>
 
-        {/*  JSX block for displaying the alert message here */}
+        {/*  JSX block for displaying the alert message */}
         <div className="alert-message">
           {showAlert && (
             <div className={`alert ${alertMessage === "Login Successfull!!" ? "success" : "error"}`}>
@@ -127,20 +127,20 @@ const Login = () => {
             <div>
               <label>Password:</label>
               <div className="password-input">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                placeholder="Enter your password"
-                onChange={handleInputChange}
-                required
-              />
-               <span
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  placeholder="Enter your password"
+                  onChange={handleInputChange}
+                  required
+                />
+                <span
                   className="toggle-password"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? eyeSlashIcon : eyeIcon}
                 </span>
-            </div>
+              </div>
             </div>
             <div className="d-flex flex-column">
               <button type="submit">Login</button>
