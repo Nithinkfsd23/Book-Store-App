@@ -161,20 +161,21 @@ const BookAdd = (props) => {
 
 
 
-// Check if the user is an admin before rendering the form
-const isAdmin = userRole === 'admin';
+// Check the role admin or user before rendering the form
+const isAuthorized = userRole === 'admin' || userRole === 'user';
 
-if (!isAdmin) {
+if (!isAuthorized) {
   return (
     <div>
       <h2>Access Denied</h2>
       <p>You do not have permission to access this page.</p>
       <Link to="/login">
-        <Button primary>Login</Button>
-      </Link>
+          <Button primary>Login</Button>
+        </Link>
     </div>
   );
 }
+
 
 
 
